@@ -1,7 +1,4 @@
 ---
-published: false
----
----
 title: How I  Site
 date: 2023-09-05 11:00:00
 categories: [Random Tech]
