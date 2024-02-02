@@ -1,9 +1,9 @@
 ---
-title: Bonnes pratiques pour l'Indentation dans le Code JavaScript 
+title: Bonnes pratiques codestyle de JavaScript 
 date: 2024-02-02 11:00:00
 categories: [Fondement]
 tags: [JavaScript, notions, noyau, codestyle]     # TAG names should always be lowercase
-author: Alexandre Vandemoortèle
+author: GoXLd
 pin: false
 published: true
 ---
