@@ -5,6 +5,7 @@ categories: [Personnel]
 tags: [personnel, CV]     # TAG names should always be lowercase
 author: Alexandre Vandemoortèle
 pin: true
+published: true
 ---
 # Bienvenue sur mon site web !
 
@@ -13,6 +14,29 @@ Bienvenue sur ma page d'accueil, où je partage ma passion pour le développemen
 ## À propos de moi
 
 Arrivé en France en août 2018. Ayant été manager dans mon ancien travail, je suis quelqu'un de responsable, à l’écoute et sociable. Je suis motivé pour trouver un nouveau travail et j’ai de bonnes connaissances en langues étrangères. Je suis passionné par le monde du développement web et j'ai acquis une expertise dans la création de sites web innovants et fonctionnels. Mon parcours professionnel reflète mon engagement envers l'excellence et la créativité.
+
+# Formations
+
+## Formations en Français Langue Étrangère (FLE)
+
+### L’OMEP, Wattrelos
+- **FLE Av SIEG (Français Langue Étrangère)**
+  - Durée: 350 heures
+  - Année: 2019
+
+### L’OMEP, Wattrelos
+- **FLE Av SIEG Avancée (Français Langue Étrangère)**
+  - Durée: 500 heures
+  - Année: 2022
+  - Financées par Le Conseil Régional des Hauts de France
+
+## Éducation Supérieure
+
+### Université des Mines de l'Oural, Russie (2009 - 2014)
+- **Spécialiste. Faculté de Technologie. Ingénieur des Mines**
+- Équivalence en France: Attestation de Comparabilité (BAC+5)
+  - Référence du dossier: 656958
+  - Reçu en 2021
 
 ## Mes compétences
 
