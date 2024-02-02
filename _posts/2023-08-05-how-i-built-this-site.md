@@ -1,7 +1,10 @@
 ---
+published: false
+---
+---
 title: How I  Site
 date: 2023-09-05 11:00:00
-categories: [Random Tech]
+categories: [Personel]
 tags: [blog, jekyll, cms, web, giscus, github pages]     # TAG names should always be lowercase
 author: chelseyb
 pin: true
