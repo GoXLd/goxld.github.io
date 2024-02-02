@@ -1,8 +1,8 @@
 ---
-title: Bienvenue sur ma page d'accueil
+title: Bienvenue sur mon site web 
 date: 2024-02-02 11:00:00
 categories: [Personnel]
-tags: [personnel, ]     # TAG names should always be lowercase
+tags: [personnel, CV]     # TAG names should always be lowercase
 author: Alexandre Vandemoortèle
 pin: true
 ---
@@ -12,13 +12,16 @@ Bienvenue sur ma page d'accueil, où je partage ma passion pour le développemen
 
 ## À propos de moi
 
-Je suis passionné par le monde du développement web et j'ai acquis une expertise dans la création de sites web innovants et fonctionnels. Mon parcours professionnel reflète mon engagement envers l'excellence et la créativité.
+Arrivé en France en août 2018. Ayant été manager dans mon ancien travail, je suis quelqu'un de responsable, à l’écoute et sociable. Je suis motivé pour trouver un nouveau travail et j’ai de bonnes connaissances en langues étrangères. Je suis passionné par le monde du développement web et j'ai acquis une expertise dans la création de sites web innovants et fonctionnels. Mon parcours professionnel reflète mon engagement envers l'excellence et la créativité.
 
 ## Mes compétences
 
-- **Développement Front-end:** HTML, CSS, JavaScript, React
-- **Développement Back-end:** Node.js, Express, MongoDB
-- **Conception UX/UI:** Wireframing, prototypage, design responsive
+- Aptitudes linguistiques
+- Gestion de projet et planification
+- Travail d’équipe
+- Autonomie et prise d’initiative 
+- Capacités d’adaptation
+
 
 ## Mes projets
 
@@ -26,7 +29,12 @@ Explorez mes projets précédents qui mettent en avant mes compétences variées
 
 ## Curriculum Vitae en ligne
 
+![Curriculum Vitae en ligne](https://lh3.googleusercontent.com/pw/ABLVV84KMPA0itFsjfvLCpWt-25U69WXgDqU4H2_eGnv0NGuCQ91QxtHuYA_oeWZW_lHf9A0fR7GfSwPvRpv7VmbZXMdbV7O1YsTqW13_AfgKiu_xlUt=w2400)
+
+
 Mon site web sert également de CV en ligne, présentant mon parcours professionnel, mes compétences techniques et mes réalisations. Consultez mon portfolio pour en savoir plus sur mes projets passés et actuels.
+
+
 
 ## Contact
 
@@ -35,4 +43,3 @@ N'hésitez pas à me contacter pour discuter de vos idées de projet ou pour en 
 Merci de visiter mon site, j'espère que vous apprécierez explorer mes travaux et en apprendre davantage sur mon parcours dans le domaine de la création web.
 
 À bientôt !
-
