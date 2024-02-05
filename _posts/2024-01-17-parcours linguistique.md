@@ -29,6 +29,8 @@ image:
 
 ### Volontariat : Traduction de Twitter en russe
 
+Depuis 2011, j'avais de l'intérêt pour Twitter, bien que ces derniers temps je ne l'utilise plus autant. ![C'est vraiment facile partager ses idées sur Twitter](https://photos.app.goo.gl/AuNeag9x8XiSrVBM9)J'aimerais partager mon expérience avec ce service. Je considère que Twitter reste toujours l'une des meilleures plateformes pour exprimer son opinion et sa position.
+
 L'une des expériences les plus marquantes pour moi a été ma participation à la traduction de **Twitter** en russe, d'autant plus que dans ma langue maternelle, il n'existe pas de mots tels que _«tweet»_, _«retweet»_ et _«twitter»_. De nombreux autres termes, tels que le sens de _«follow »_, auraient également une signification différente ou serait-il plus approprié de dire _« suivre »_ ? (et oui, nous allons parler en français de la façon dont nous avons traduit Twitter de l'anglais vers le russe).
 
 
@@ -41,14 +43,18 @@ En cliquant sur cette icône 'Twitter Translate Badge', on pouvait voir les trad
 
 
 
-En particulier, en supprimant la "traduction automatique" qui n'avait pas été vérifiée. Je comprends que je fais aussi des erreurs, mais dans le "champ personnel", il est nécessaire d'apprendre de ses erreurs. ![La traduction automatique en Twitter](https://lh3.googleusercontent.com/pw/ABLVV87U66cHIQ7aZdUA3dn8FBTQN8jv2leKBHCRBPyiBqzfUnDophFC3hbAaBpMFKFgqeV83TXV30po9I8bTPtCADOauFrUEtDJ4f20vr73tNRfj5WL=w2400)
+En particulier, en supprimant la _"traduction automatique"_ qui n'avait pas été vérifiée. Je comprends que je fais aussi des erreurs, mais dans le "champ personnel", il est nécessaire d'apprendre de ses erreurs. ![La traduction automatique en Twitter](https://lh3.googleusercontent.com/pw/ABLVV87U66cHIQ7aZdUA3dn8FBTQN8jv2leKBHCRBPyiBqzfUnDophFC3hbAaBpMFKFgqeV83TXV30po9I8bTPtCADOauFrUEtDJ4f20vr73tNRfj5WL=w2400)
 Cependant, lorsque nous traduisons des actualités mondiales, il est essentiel de mettre fin à l'amateurisme et de considérer cela comme un véritable travail ! 
 
 ### Fin du service
 
-Depuis le 1er novembre 2017, le Twitter Translation Center a cessé son activité. Il est possible que l'équipe d'Elon Musk relance ce service de traduction bénévole, mais pour l'instant, tous les profils et statistiques sont inaccessibles. Ils ont simplement laissé en mémoire des "badges" pour les participants les plus actifs de la communauté. L'origine et l'authenticité de ces badges peuvent être confirmées dans le code source de la page. (Ajouter une image du code source)
+Depuis le **1er novembre 2017**, le Twitter Translation Center a cessé son activité. 
 
-Merci de votre attention !
+![Twitter Translation Center are closed](https://lh3.googleusercontent.com/pw/ABLVV85UjzUByq2ijifag0BCU44-0n7VVQfHvhACeLpIoYKjyQ2LjfytaKpyiED3sDoTZ6uck7kZLcIMfJP3sK6RtPM8aTKyXJJwsvZIjWF_cUfFPmVz=w2400)
+
+Il est possible que l'équipe d'Elon Musk relance ce service de traduction bénévole, mais pour l'instant, tous les profils et statistiques sont inaccessibles. Ils ont simplement laissé en mémoire des _"badges"_ pour les participants les plus actifs de la communauté. L'origine et l'authenticité de ces badges peuvent être confirmées dans le code source de la page. ![Code initial Twitter ](https://lh3.googleusercontent.com/pw/ABLVV86ZjDA7ZQyKYZuQuhpIxQd17pwhZRaE7VOI6We1qmol3n5U92ZRQ9pQNZIfKTIu5khQYH0sw51FjGBZKXJ_PprhKqI_vMH4oSD4mPotTOq9Ymi9=w2400)
+
+_Merci de votre attention !_
 
 
 
