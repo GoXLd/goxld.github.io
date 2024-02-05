@@ -6,6 +6,10 @@ tags: [personnel, CV]     # TAG names should always be lowercase
 author: GoXLd
 pin: true
 published: true
+image:
+  path: /img/post_bienvenue.jpg
+  lqip: data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAICAgICAgICAgIDAgICAwQDAgIDBAUEBAQEBAUGBQUFBQUFBgYHBwgHBwYJCQoKCQkMDAwMDAwMDAwMDAwMDAz/2wBDAQMDAwUEBQkGBgkNCgkKDQ8ODg4ODw8MDAwMDA8PDAwMDAwMDwwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAAJABIDAREAAhEBAxEB/8QAFgAAAwAAAAAAAAAAAAAAAAAABwgJ/8QAMhAAAAUBBAMRAQAAAAAAAAAAAQIDBAUGAAcREgg0NRMWISIkMTM2QVFWYWNzdrK01v/EABcBAQEBAQAAAAAAAAAAAAAAAAIDBAH/xAAfEQABAwMFAAAAAAAAAAAAAAAAAQIREkFhEyExUdH/2gAMAwEAAhEDEQA/AE5aXpPDLPqdeuagqpeQUZIx8e4ct45JuuOcCEKjGFIUoGPgJgMcRw7MQtng1wHK56Zpxxd7MT947eJqengeoR8RBM5AvIUhVVF2qMefAqyYrIFSBJwplNwbnlPxrBySscCmncZ7DR68LUzs/fTsAdV79Z6T0efzsaXdndTGSPTbr7SnsuPqpa4UDbo761fr8NQ/Q2sH2E25Q/8AmbRF6f/Z
+  alt: Passionné d'informatique, chaque composant est une pièce du puzzle qui donne vie à ma passion. 💻🔧
 ---
 # Bienvenue sur mon site web !
 
@@ -53,7 +57,7 @@ Explorez mes projets précédents qui mettent en avant mes compétences variées
 
 ## Curriculum Vitae en ligne
 
-![Curriculum Vitae en ligne](https://lh3.googleusercontent.com/pw/ABLVV84KMPA0itFsjfvLCpWt-25U69WXgDqU4H2_eGnv0NGuCQ91QxtHuYA_oeWZW_lHf9A0fR7GfSwPvRpv7VmbZXMdbV7O1YsTqW13_AfgKiu_xlUt=w2400)
+![Curriculum Vitae en ligne](https://lh3.googleusercontent.com/pw/ABLVV87gabN24OuhtXnnNxEUI9HZ4woyog_ll841nO4eelwUMNI-8je2N__9myHzTt2TSSCvQa3r2QDP7T6aBVYjWnSZ6PSrlRQ6Rbsxu_RgiJ4OQdEP=w2400)
 
 
 Mon site web sert également de CV en ligne, présentant mon parcours professionnel, mes compétences techniques et mes réalisations. Consultez mon portfolio pour en savoir plus sur mes projets passés et actuels.
