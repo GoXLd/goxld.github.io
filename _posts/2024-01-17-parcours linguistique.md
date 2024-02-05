@@ -1,5 +1,5 @@
 ---
-title: Bienvenue sur ma page personnelle en ligne. 
+title: Compétences linguistiques 
 date: 2024-02-02 11:00:00
 categories: [Personnel]
 tags: [personnel, CV, français, anglais]     # TAG names should always be lowercase
@@ -7,7 +7,7 @@ author: GoXLd
 pin: true
 published: true
 image:
-  path: /img/clavier_3_langues_preview.jpg
+  path: /img/clavier_langues_preview.jpg
   lqip: data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAJABIDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAcEBQYI/8QAKRAAAQIEBAQHAAAAAAAAAAAAAQIDAAQGEQUhMTUHEiJzExQyQXGBsv/EABYBAQEBAAAAAAAAAAAAAAAAAAEEBf/EABYRAQEBAAAAAAAAAAAAAAAAAAARAf/aAAwDAQACEQMRAD8AXuKVkl6dcL77aHubqSr1JvqDlr7fRjY0RXHjTCGETSVOKIAKL5Qr+IO7TnyqIXD7e5buJiPcrbdmS9RYt5duzDyxyjqLywTlra2UEWeF7ZKdlH5EEEFf/9k=
   alt: Sur la photo, mon premier clavier trilingue (2015)
 ---
