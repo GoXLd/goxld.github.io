@@ -16,7 +16,7 @@ timezone: Europe/Paris
 
 title: Alexandre Vandemoortèle # the main title
 
-tagline: the biggest fan of Google sheets # it will display as the sub-title
+tagline: the biggest fan of Google Apps Script # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   A short overview of my works dedicated to Google Sheets and Google App Script.
@@ -63,7 +63,7 @@ google_analytics:
 #     light  - Use the light color scheme
 #     dark   - Use the dark color scheme
 #
-theme_mode: # [light|dark]
+theme_mode: light # [light|dark]
 
 # The CDN endpoint for images.
 # Notice that once it is assigned, the CDN url
