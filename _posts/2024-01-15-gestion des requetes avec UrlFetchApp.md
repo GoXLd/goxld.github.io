@@ -2,7 +2,7 @@
 title: Gestion des requêtes avec UrlFetchApp.fetch en Google Apps Script 
 date: 2024-01-15 11:00:00
 categories: [Fondement]
-tags: [JavaScript, Google, Script, Apps, Parser]     #TAG names should always be lowercase
+tags: [javascript, google, script, apps, parser]     #TAG names should always be lowercase
 author: GoXLd
 pin: false
 published: true

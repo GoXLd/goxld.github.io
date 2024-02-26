@@ -2,7 +2,7 @@
 title: Bonnes pratiques codestyle de JavaScript 
 date: 2024-02-02 11:00:00
 categories: [Fondement]
-tags: [JavaScript, notions, noyau, codestyle]     # TAG names should always be lowercase
+tags: [javascript, notions, noyau, codestyle]     # TAG names should always be lowercase
 author: GoXLd
 pin: false
 published: true
@@ -67,26 +67,5 @@ function exemple() {
 }
 
 ```
-
-
-Test of JavaScript
-
-```html
-
-    <p>Пример JavaScript:</p>
-    <button id="myButton">Нажми меня</button>
-    <script>
-        document.getElementById('myButton').addEventListener('click', function() {
-            alert('Привет, это JavaScript!');
-        });
-    </script>
-```
-    <p>Пример JavaScript:</p>
-    <button id="myButton">Нажми меня</button>
-    <script>
-        document.getElementById('myButton').addEventListener('click', function() {
-            alert('Привет, это JavaScript!');
-        });
-    </script>
 
 En conclusion, une indentation correcte est essentielle pour maintenir un code JavaScript lisible et cohérent. En suivant ces bonnes pratiques, vous contribuerez à améliorer la qualité de votre code et à faciliter la collaboration au sein de votre équipe de développement.

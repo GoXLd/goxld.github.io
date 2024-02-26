@@ -2,7 +2,7 @@
 title: Compétences linguistiques 
 date: 2024-02-02 11:00:00
 categories: [Personnel]
-tags: [personnel, CV, français, anglais]     # TAG names should always be lowercase
+tags: [personnel, cv, français, anglais]     # TAG names should always be lowercase
 author: GoXLd
 pin: true
 published: true
