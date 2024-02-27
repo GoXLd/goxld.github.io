@@ -37,7 +37,7 @@ published: true
       left: 50%;
       transform: translate(-50%, -50%);
       width: 15%;
-      height: 20%;
+      height: 25%;
       background-color: rgba(0, 0, 0, 0.7);
       padding: 20px;
       border-radius: 5px;
