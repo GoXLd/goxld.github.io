@@ -5,7 +5,7 @@ categories: [Fondement]
 tags: [javascript, notions, noyau, codestyle]     # TAG names should always be lowercase
 author: GoXLd
 pin: false
-published: true
+published: false
 ---
   Модальное окно с отправкой данных в Google Таблицу
   <style>
