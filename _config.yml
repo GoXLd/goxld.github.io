@@ -95,10 +95,10 @@ comments:
   giscus:
     repo: 'GoXLd/goxld.github.io'
     repo_id: 'R_kgDOLL1YWA'
-    category: 'General'
-    category_id: 'DIC_kwDOLL1YWM4CehF9'
-    mapping: # optional, default to 'pathname'
-    input_position: # optional, default to 'bottom'
+    category: 'Announcements'
+    category_id: 'DIC_kwDOLL1YWM4CehF8'
+    mapping: 'pathname' # optional, default to 'pathname'
+    input_position: 'top' # optional, default to 'bottom'
     lang: # optional, default to the value of `site.lang`
     reactions_enabled: # optional, default to the value of `1`
 

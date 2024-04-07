@@ -4,7 +4,8 @@ date: 2024-04-06 11:00:00
 categories: [MacOS]
 tags: [macbook, arm, m1, m2, m3, virtualisation]     #TAG names should always be lowercase
 author: GoXLd
-pin: true
+pin: false
+toc: false
 published: true
 img_path: /img/ws2022/
 image:
