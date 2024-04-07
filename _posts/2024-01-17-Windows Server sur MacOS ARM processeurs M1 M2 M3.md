@@ -20,13 +20,18 @@ Ces notes s'appliqueront à tous les ordinateurs de la gamme macbook air/pro bas
 
 Mon Macbook Air M2 8/256 2022
 
-![iStat Menus](2024-04-06_11-16-32.webp){: .shadow : .left } 
 
-### AVERTISSEMENT !!! 
-Je suis simplement un amateur et un expérimentateur qui aime les défis complexes et les solutions simples, mais lors de cet essai, mon Macbook a été extrêmement surchauffé (l'absence de système de refroidissement actif a un impact).
-Je recommande d'installer les capteurs iStat Menus.
 
-## Installation via UTM - (nécessite un effort minimal, gratuit)
+### AVERTISSEMENT
+>Je suis simplement un amateur et un expérimentateur qui aime les défis complexes et les solutions simples, mais lors de cet essai, mon Macbook a été extrêmement surchauffé (l'absence de système de refroidissement actif a un impact). Avant de répéter, lisez jusqu'à la fin.
+{: .prompt-danger }
+
+![iStat Menus](2024-04-06_11-16-32.webp){: .shadow : .right} Je recommande d'installer les capteurs iStat Menus.
+
+
+---
+
+## Installation via UTM
 
 Applications/bibliothèques/liens nécessaires :
 - Installer brew
@@ -72,7 +77,8 @@ Sélectionnez l'image de notre système - j'ai utilisé une image système offic
 
 **ATTENTION TRÈS IMPORTANT !** J'ai beaucoup lu sur l'émulation de Windows Server sur Internet et il y a beaucoup d'avis négatifs sur cette approche, disant que c'est très lent et instable. Mais dans mon cas (encore une fois, Macbook Air M2 8/256), tout fonctionne à un niveau acceptable, bien que la température pendant l'installation soit effrayante. Après tout, j'ai besoin du système pour apprendre, pas pour déployer un centre de données réel.
 
-La première fois que j'ai installé WS, j'ai aussi trouvé que tout était très lent et trop bogué, mais quelle a été ma surprise quand j'ai réalisé que lors de l'installation avec les paramètres par défaut, UTM essayait d'installer Windows en émulant seulement un cœur de processeur. 1 ! Il est étrange que personne n'en parle, compte tenu des lags et des ralentissements du système émulé.
+>La première fois que j'ai installé WS, j'ai aussi trouvé que tout était très lent et trop bogué, mais quelle a été ma surprise quand j'ai réalisé que lors de l'installation avec les paramètres par défaut, UTM essayait d'installer Windows en émulant seulement un cœur de processeur. 1 ! Il est étrange que personne n'en parle, compte tenu des lags et des ralentissements du système émulé.
+{: .prompt-warning }
 
 ![Gestionnaire des tâches avec le système installé avec les paramètres par défaut du processeur émulé](2024-04-06_01-21-55.webp){: .shadow }
 Travailler dans un tel système, même à des fins éducatives, était impossible.
@@ -119,10 +125,13 @@ Et après un certain temps, vous verrez la fenêtre d'installation de Windows fa
 ### Conseils d'installation :
 
 Pendant l'installation de Windows Server, n'oubliez pas de sélectionner le système approprié :
-
-Petites explications :
-- Desktop Experience permet d'avoir une interface graphique familière des versions de bureau de Windows.
-- La version Datacenter permet de créer des comptes d'utilisateurs virtuels (utilisateurs du système).
+<!-- markdownlint-capture -->
+<!-- markdownlint-disable -->
+> Petites explications :
+- Desktop Experience permet d'avoir une interface graphique familière des versions de bureau de **Windows**.
+- La version Datacenter permet de créer des comptes d'utilisateurs virtuels (utilisateurs du système) 
+{: .prompt-info }
+<!-- markdownlint-restore -->
 
 Pour mes besoins éducatifs, j'installerai Windows Server 2022 (expérience de bureau) licence Datacenter.
 
@@ -136,15 +145,18 @@ Après l'installation, vous verrez la fenêtre de déverrouillage Windows standa
 N'oubliez pas non plus qu'au premier démarrage, le système doit installer UTM Guest Tool.
 
 ![Windows Server 2022](2024-04-05_20-30-11.webp){: .shadow }
-
-En conclusion, il me semble que lancer Windows Server de cette manière sur un M2 8/256 est un masochisme complet. Un système avec une émulation plus précisément réglée fonctionne beaucoup mieux (moins de plantages et de gel), mais reste loin de la fluidité de la virtualisation. D'ailleurs, lors de l'utilisation de Windows Server 2022, il n'y a pas de surchauffe du système et la température moyenne du Macbook reste entre 50 et 75 degrés. Peut-être que sur mon ordinateur 'faible', il faut d'essayer des versions plus anciennes (moins exigeantes en matériel) 
-
+il me semble que lancer Windows Server de cette manière sur un M2 8/256 est un masochisme complet. Un système avec une émulation plus précisément réglée fonctionne beaucoup mieux (moins de plantages et de gel), mais reste loin de la fluidité de la virtualisation. D'ailleurs, lors de l'utilisation de Windows Server 2022, il n'y a pas de surchauffe du système et la température moyenne du Macbook reste entre 70 et 80 degrés. 
+>Peut-être que sur mon ordinateur 'faible', il faut d'essayer des versions plus anciennes (moins exigeantes en matériel) 
+{: .prompt-tip }
 N'oubliez pas retirez le ISO WS
 ![Windows Server 2022](2024-04-07_18-31-38.webp){: .shadow }
 
 Windows Server 2022
 
 ![Windows Server 2022](2024-04-07_20-24-44.webp){: .shadow }
+
+>La conclusion finale en raison de l'absence de refroidissement actif et du coût des ressources pour émuler x86_64 et exécuter Windows Server 2022 est une action très dangereuse, pouvant entraîner une dégradation rapide du processeur central et la panne de l'ordinateur. Le démarrage sur les versions MacBook Pro reste également incertain. Mais sur les versions par défaut de n'importe quel MacBook Air (en 2024) - ne le faites même pas, n'essayez même pas.
+{: .prompt-danger }
 
 _Merci de votre attention !_
 
