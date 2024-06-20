@@ -6,7 +6,7 @@ tags: [macbook, arm, m1, m2, m3, virtualisation, CISCO, Wireless Access Points, 
 author: GoXLd
 pin: false
 toc: false
-published: false
+published: true
 img_path: /img/cisco-me/
 image:
   path: logo_CISCO_ME.webp
@@ -30,46 +30,65 @@ Mon Macbook Air M2 8/256 2022 mais je vais utiliser Win11 (hosted hypervisor: pa
 ## Installation
 
 Applications/bibliothèques/liens nécessaires :
-- Installer brew
-   Commande à exécuter dans le terminal :
-   ```bash
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+- Installer **Tftpd64**
    ```
-   Instructions détaillées d'installation disponibles sur le [site officiel](https://brew.sh/).
+   https://pjo2.github.io/tftpd64/
+   ```
+   Instructions détaillées d'installation disponibles sur le [wiki officiel](https://github.com/PJO2/tftpd64/wiki).
 
-- Installer les outils de développement xcode
-   Commande à exécuter dans le terminal :
-```bash
-xcode-select --install
-```    
-- Installer UTM
-   Commande à exécuter dans le terminal :
-```bash
-brew install utm
+- Installer **Putty.exe**
+
+
+ Téléchargez l'image "Mobility Express for Aironet 1830"  [ici](https://software.cisco.com/download/home/).
+
+ ![CISCO download page](2024-06-20_00-02-15.webp){: .shadow }
+
+
+>**Description :**	Cisco 1830 Series Mobility Express Release 8.10 Software,to be used for conversion from Lightweight Access Points only.
+
+## Installation Mobility-Express par tftp server
+
+1.	Désactiver le pare-feu et ajouter des exceptions pour tftpd64 :
+
+Désactivation du pare-feu :	Ouvrez les paramètres du pare-feu sur votre ordinateur.	Désactivez temporairement le pare-feu pour éviter toute interférence.
+
+OU	ajout d'exceptions :
+
+Ajoutez tftpd64.exe à la liste des exceptions du pare-feu pour permettre une communication fluide.
+
+2.	Configurer l'alimentation sur les interfaces du Switch pour une alimentation continue des interfaces AP Cisco :
+Assurez-vous que toutes les interfaces connectées aux AP Cisco sont configurées pour une alimentation continue afin d'éviter les interruptions pendant la mise à jour du firmware.
+Configuration de l'alimentation Inline :
+Connectez-vous à l'interface de ligne de commande (CLI) du switch.
+
+Entrez les commandes suivantes pour configurer l'alimentation continue sur toutes les interfaces :
 ```
-- Installer qemu
-   Commande à exécuter dans le terminal :
-```bash
-brew install qemu
-```
+   configure terminal
+   interface range <range_of_interfaces>
+   power inline auto
+ ```
+>Dans les commutateurs CISCO, il n'y a pas d'alimentation PoE constamment activée sur les interfaces, seulement AUTO ou Disable. Donc, ne soyez pas surpris de voir AUTO.
+{: .prompt-tip }
 
- Téléchargez l'image disque de Windows Server 2022 [ici](https://www.microsoft.com/fr-fr/evalcenter/download-windows-server-2022).
+### Configuration de la carte réseau sur l'ordinateur :
+4.	Changer l'adresse IPv4 en statique :
+Allez dans les paramètres réseau de votre ordinateur.
+Configurez l'adresse IPv4 comme suit :
+Adresse IP : 10.0.20.10
+Masque de sous-réseau : 255.0.0.0
 
-## Installation de Windows Server
+![Les paramètres réseau](2024-06-17_11-39-24.webp){: .shadow }
 
-![Menu d'installation UTM](2024-04-06_11-32-38.webp){: .shadow }
+### Lancez Tftpd64 et configurez-le selon les captures d'écran fournies.
 
-Sélectionnez le processus d'émulation plutôt que de virtualisation, car nous prévoyons d'utiliser une image système créée pour une autre architecture.
+Tftpd64 - GLOBAL
+![Tftpd64 - Settings - GLOBAL](2024-06-17_11-43-31.webp){: .shadow }
 
-![Menu d'installation UTM](2024-04-07_16-43-40.webp){: .shadow }
+Tftpd64 - Settings - TFTP
+![Tftpd64 - Settings - TFTP](2024-06-17_13-29-07.webp){: .shadow }
 
-Ne sélectionnez pas "autre système" - nous allons installer avec les préconfigurations pour Windows 10/11. J'ai essayé plusieurs fois d'installer via "Autre", mais le BIOS intégré ne voulait même pas démarrer ou détecter l'image système. Par conséquent, écoutez mon expérience et choisissez Windows 10/11.
-
-![Menu d'installation UTM](2024-04-07_16-44-45.webp){: .shadow }
-
-Sélectionnez l'image de notre système - j'ai utilisé une image système officielle avec les mises à jour de mars 2024 de Windows Server 2022 (au moment de la rédaction de l'article en avril 2024). Laissez les autres cases cochées telles quelles, faites comme sur la capture d'écran.
-
-![Menu d'installation UTM](2024-04-07_16-46-03.webp){: .shadow }
+Tftpd64 - Settings - DHCP
+![Tftpd64 - Settings - DHCP](2024-06-17_13-32-53.webp){: .shadow }
 
 **ATTENTION TRÈS IMPORTANT !** J'ai beaucoup lu sur l'émulation de Windows Server sur Internet et il y a beaucoup d'avis négatifs sur cette approche, disant que c'est très lent et instable. Mais dans mon cas (encore une fois, Macbook Air M2 8/256), tout fonctionne à un niveau acceptable, bien que la température pendant l'installation soit effrayante. Après tout, j'ai besoin du système pour apprendre, pas pour déployer un centre de données réel.
 
