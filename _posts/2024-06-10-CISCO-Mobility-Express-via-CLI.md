@@ -108,34 +108,27 @@ La taille de l'espace de stockage permanent selon vos besoins (et possibilités)
 
 Après l'installation, l'installateur m'a demandé de choisir un dossier partagé pour les fichiers (vous pouvez le faire plus tard, mais dans mon cas, j'ai créé un répertoire séparé pour utiliser WS).
 
-![Menu d'installation UTM](2024-04-07_16-51-09.webp){: .shadow }
 
 L'installateur résume toutes les configurations que nous avons saisies pour confirmation finale.
-![Menu d'installation UTM](2024-04-07_16-52-09.webp){: .shadow }
 
 Maintenant, nous avons le système dans la fenêtre de sélection dans UTM.
-![Menu d'installation UTM](2024-04-07_16-52-49.webp){: .shadow }
 
 Lancer
 
 Lors du premier démarrage, j'ai été confronté à cette fenêtre, résolue en saisissant la commande
 
-![Menu d'installation UTM](2024-04-07_16-53-53.webp){: .shadow }
 
 ```bash
 exit
 ```
 
 Et sans modifier les paramètres du BIOS - effectuez une réinitialisation - reset
-![Menu d'installation UTM](2024-04-07_16-54-46.webp){: .shadow }
 
 ## "Press any key to load ..."
 
 Appuyez sur n'importe quelle touche
 
 Et après un certain temps, vous verrez la fenêtre d'installation de Windows familière.
-
-![Menu d'installation UTM](2024-04-07_16-57-23.webp){: .shadow }
 
 ### Conseils d'installation :
 
@@ -151,24 +144,17 @@ Pendant l'installation de Windows Server, n'oubliez pas de sélectionner le syst
 Pour mes besoins éducatifs, j'installerai Windows Server 2022 (expérience de bureau) licence Datacenter.
 
 Maintenant, faites attention aux températures pendant l'installation :
-![l'installation UTM](2024-04-06_00-53-47.webp){: .shadow }
 
 Après l'installation, vous verrez la fenêtre de déverrouillage Windows standard, où vous serez invité à saisir Ctrl + Alt + Detele pour déverrouiller, mais comme ces touches n'existent pas, je vais insérer ici une réponse de GitHub UTM [lien vers le post](https://github.com/utmapp/UTM/issues/3413#issuecomment-1001997191)  (GoXLd : Une autre solution: vous pouvez également toujours installer un clavier standard WIN) 
 
-![Windows Server 2022](2024-04-07_17-53-27.webp){: .shadow }
-
 N'oubliez pas non plus qu'au premier démarrage, le système doit installer UTM Guest Tool.
 
-![Windows Server 2022](2024-04-05_20-30-11.webp){: .shadow }
 il me semble que lancer Windows Server de cette manière sur un M2 8/256 est un masochisme complet. Un système avec une émulation plus précisément réglée fonctionne beaucoup mieux (moins de plantages et de gel), mais reste loin de la fluidité de la virtualisation. D'ailleurs, lors de l'utilisation de Windows Server 2022, il n'y a pas de surchauffe du système et la température moyenne du Macbook reste entre 70 et 80 degrés. 
 >Peut-être que sur mon ordinateur 'faible', il faut d'essayer des versions plus anciennes (moins exigeantes en matériel) 
 {: .prompt-tip }
 N'oubliez pas retirez le ISO WS
-![Windows Server 2022](2024-04-07_18-31-38.webp){: .shadow }
 
 Windows Server 2022
-
-![Windows Server 2022](2024-04-07_20-24-44.webp){: .shadow }
 
 >La conclusion finale en raison de l'absence de refroidissement actif et du coût des ressources pour émuler x86_64 et exécuter Windows Server 2022 est une action très dangereuse, pouvant entraîner une dégradation rapide du processeur central et la panne de l'ordinateur. Le démarrage sur les versions MacBook Pro reste également incertain. Mais sur les versions par défaut de n'importe quel MacBook Air (en 2024) - ne le faites même pas, n'essayez même pas.
 {: .prompt-danger }
