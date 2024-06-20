@@ -95,14 +95,14 @@ Tftpd64 - Settings - DHCP
 >La première fois que j'ai installé WS, j'ai aussi trouvé que tout était très lent et trop bogué, mais quelle a été ma surprise quand j'ai réalisé que lors de l'installation avec les paramètres par défaut, UTM essayait d'installer Windows en émulant seulement un cœur de processeur. 1 ! Il est étrange que personne n'en parle, compte tenu des lags et des ralentissements du système émulé.
 {: .prompt-warning }
 
-![Gestionnaire des tâches avec le système installé avec les paramètres par défaut du processeur émulé](2024-04-06_01-21-55.webp){: .shadow }
+![Gestionnaire des tâches avec le système installé avec les paramètres par défaut du processeur émulé](2024-06-17_13-32-53.webp){: .shadow }
 Travailler dans un tel système, même à des fins éducatives, était impossible.
 
 **SOLUTION :** Spécifiez les cœurs manuellement. À des fins de test, j'ai spécifié 4 cœurs et l'installation ainsi que le démarrage du nouveau système ont été beaucoup plus rapides. Je pense que sur votre Macbook Pro, vous pouvez spécifier plus de cœurs alloués.
 
 Choisissez autant de RAM que possible. J'ai choisi 4 Go, mais si j'avais un Macbook avec 16 Go, j'aurais choisi 8 Go. La logique est simple.
 
-![Menu d'installation UTM](2024-04-07_16-48-52.webp){: width="700" height="400" : .shadow }
+![Menu d'installation UTM](2024-06-17_13-32-53.webp){: width="700" height="400" : .shadow }
 
 La taille de l'espace de stockage permanent selon vos besoins (et possibilités).
 
