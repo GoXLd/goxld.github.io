@@ -13,7 +13,7 @@ image:
 ---
 # Bienvenue !
 
-Bienvenue sur ma page d'accueil, dédiée à ma passion pour le développement web. Vous trouverez ici un aperçu de mes compétences, de mes projets et de mon parcours professionnel. Cette page n'est pas seulement une vitrine de mes réalisations, mais également un curriculum vitae interactif en ligne.
+Mon blog est dédiée à ma passion pour le développement web. Vous trouverez ici un aperçu de mes compétences, de mes projets et de mon parcours professionnel. Cette page n'est pas seulement une vitrine de mes réalisations, mais également un curriculum vitae interactif en ligne.
 
 ## À propos de moi
 
