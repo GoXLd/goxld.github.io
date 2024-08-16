@@ -97,9 +97,9 @@ comments:
   # Giscus options › https://giscus.app
   giscus:
     repo: GoXLd/goxld.github.io
-    repo_id: R_kgDOLL1YWA
-    category: Announcements
-    category_id: DIC_kwDOLL1YWM4CehF8
+    repo_id: #R_kgDOLL1YWA
+    category: #Announcements
+    category_id: #DIC_kwDOLL1YWM4CehF8
     mapping: pathname # optional, default to 'pathname'
     input_position: bottom # optional, default to 'bottom'
     lang: # optional, default to the value of `site.lang`
