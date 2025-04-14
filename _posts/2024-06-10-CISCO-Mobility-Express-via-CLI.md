@@ -2,7 +2,7 @@
 title: Guide - CISCO Mobility Express sur AIR-AP2802I-E-K9 GUI
 date: 2024-06-20 11:00:00
 categories: [MacOS, Windows, CISCO]
-tags: [macbook, arm, m1, m2, m3, virtualisation, CISCO, Wireless Access Points, GUI, webinterface]     #TAG names should always be lowercase
+tags: [CISCO, Wireless Access Points, GUI, webinterface]     #TAG names should always be lowercase
 author: GoXLd
 pin: false
 toc: false
