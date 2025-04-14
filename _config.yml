@@ -16,7 +16,7 @@ timezone: Europe/Paris
 
 title: Alexandre Vandemoortèle # the main title
 
-tagline: the biggest fan of Google Apps Script # it will display as the sub-title
+tagline: Enthusiast of Google Apps Script | Proxmox | Open WebUI. # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   A short overview of my works dedicated to Google Sheets and Google App Script.
@@ -98,7 +98,7 @@ theme_mode: light # [light|dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: ./img/avatar.png
+avatar: ./img/alex.jpg
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
