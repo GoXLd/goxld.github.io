@@ -72,10 +72,14 @@ Le cœur de cette version repose sur trois mini-PC formant un **cluster performa
 
 ## Les serveurs
 
+Avant de présenter en détail la configuration interne, je précise que j’utilise un **GeeekPi 8U Server Rack DeskPi RackMate T1**, un châssis rackmount conçu pour les mini-serveurs et équipements réseau, avec une structure en alliage d’aluminium et panneau acrylique.
+
+![AE8 Geekom - mon premier mini PC](rackmate.png){: .shadow }
+
 Voici la composition du cluster :
 
-1. **Bleu** : GEEKOM AE8, AMD Ryzen 7 8845HS (8 cœurs / 16 threads, jusqu’à 5,1 GHz), 64 Go DDR5, SSD 512 Go  
-2. **Blanc** : Topton Mini PC fanless, Ryzen 7 7730U, 64 Go DDR4, SSD 1 To  
+1. **Bleu** : Topton Mini PC fanless, Ryzen 7 7730U, 64 Go DDR4, SSD 1 To  
+2. **Blanc** :  GEEKOM AE8, AMD Ryzen 7 8845HS (8 cœurs / 16 threads, jusqu’à 5,1 GHz), 64 Go DDR5, SSD 512 Go  
 3. **Rouge** : Ryzen 7 8845HS, 32 Go DDR5, SSD 512 Go
 
 Coût annuel estimé (la facture d’électricité mode 24/7):
@@ -123,13 +127,62 @@ Le second switch gigabit dispose également d’une large gamme de fonctions sta
 
 Les deux switches possèdent un port fibre optique à 10 Gb/s et huit ports Ethernet à 2,5 Gb/s chacun.
 
-Côté alimentation, tout repose sur le **alim Anker 250 W**, capable d’alimenter quatre appareils via USB-C, avec un affichage en temps réel de la consommation.  
+Côté alimentation, tout repose sur le **Alim Anker 250 W**, capable d’alimenter quatre appareils via USB-C, avec un affichage en temps réel de la consommation.  
 ![Anker](psu.jpg){: .shadow }
-La distribution automatique a nécessité quelques ajustements manuels, mais le résultat est propre, silencieux et fiable.
 
-Même en l’absence de refroidissement actif, les températures de l’alimentation ne dépassent pas les valeurs critiques — voir l’image thermique.
+Cependant, un point pratique mérite d’être mentionné : les serveurs du cluster utilisent **des interfaces d’alimentation différentes**.
+
+### Interfaces d’alimentation des serveurs
+
+| Serveur   | Modèle         | Type d’alimentation |
+| --------- | -------------- | ------------------- |
+| **Bleu**  | Topton Mini PC | Jack DC             |
+| **Blanc** | GEEKOM AE8     | Jack DC             |
+| **Rouge** | Ryzen 7 8845HS | USB-C PD            |
+
+L’**Anker 250W** fournit de l’énergie via **USB-C et USB-A**, mais je n’utilise pas les ports USB-A car ils délivrent une puissance insuffisante pour les mini-PC de type NUC.
+
+---
+
+### Câbles et adaptateurs utilisés
+
+Pour alimenter correctement chaque machine, différentes solutions ont été nécessaires :
+
+#### 🔵 Bleu (Topton Mini PC)
+- Câble **USB-C → USB-C 60W**
+- Adaptateur **USB-C → Jack DC (100W)**
+  ![Adaptateur Jack - USB-C](adaptateur.jpg){: .shadow }
+  On peut trouver ce type d’adaptateur ici :
+  👉 [Adaptateur USB-C vers DC Jack 5.5mm sur AliExpress](https://fr.aliexpress.com/item/1005005101855652.html)
+
+---
+
+#### ⚪ Blanc (GEEKOM AE8)
+- Problème lors de l’alimentation via USB-C :
+  - Au démarrage, la consommation **dépasse 60W**
+  - Même si l’Anker peut délivrer **jusqu’à 100W**, mon câble était limité à **60W**
+    ![Configuration Anker pour C1 USB-C](C1.jpg){: .shadow }
+  - Résultat : **impossible de démarrer le GEEKOM AE8** avec ce câble depuis l’Anker
+
+> Au final, **l’Anker 250W n’alimente que deux mini-PC (NUC)**.  
+Même si sa puissance totale serait théoriquement suffisante pour alimenter **l’ensemble du rack**, les **limitations liées aux câbles, aux pics de consommation au démarrage et aux différents types de connecteurs** rendent cette configuration impossible en pratique *(pour le moment)*.
+{: .prompt-danger }
+
+
+
+---
+
+#### 🔴 Rouge (Ryzen 7 8845HS)
+- Alimentation via **USB-C depuis l’Anker (70W max)**  
+- Fonctionnement **stable et fiable**
+  ![Configuration Anker pour C4 USB-C](C4.jpg){: .shadow }
+
+---
+
+La distribution de puissance a demandé quelques ajustements manuels, mais le résultat final est **propre, silencieux et fiable**.
+
+Même sans refroidissement actif, la température de l’alimentation reste **maîtrisée** et ne dépasse pas les valeurs critiques, comme le montre l’image thermique ci-dessous :
 ![Thermal](thermal.jpg){: .shadow }
-
 
 ---
 ## Refroidissement et gestion thermique
