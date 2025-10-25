@@ -44,7 +44,7 @@ Explorez mes projets précédents qui mettent en avant mes compétences variées
 
 ## Curriculum Vitae en ligne
 
-![Curriculum Vitae en ligne](https://lh3.googleusercontent.com/pw/ABLVV87gabN24OuhtXnnNxEUI9HZ4woyog_ll841nO4eelwUMNI-8je2N__9myHzTt2TSSCvQa3r2QDP7T6aBVYjWnSZ6PSrlRQ6Rbsxu_RgiJ4OQdEP=w2400)
+<!--[Curriculum Vitae en ligne](https://lh3.googleusercontent.com/pw/ABLVV87gabN24OuhtXnnNxEUI9HZ4woyog_ll841nO4eelwUMNI-8je2N__9myHzTt2TSSCvQa3r2QDP7T6aBVYjWnSZ6PSrlRQ6Rbsxu_RgiJ4OQdEP=w2400) -->
 
 
 Mon site web sert également de CV en ligne, présentant mon parcours professionnel, mes compétences techniques et mes réalisations. Consultez mon portfolio pour en savoir plus sur mes projets passés et actuels.
