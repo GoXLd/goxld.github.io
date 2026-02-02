@@ -2,3 +2,29 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2004239045280909"
   crossorigin="anonymous"></script>
 {% endif %}
+
+<style>
+  .site-title img {
+    display: block;
+    height: 43px;
+    width: auto;
+    max-width: 100%;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const siteTitle = document.querySelector("a.site-title");
+    if (!siteTitle || siteTitle.querySelector("img")) return;
+
+    const logo = document.createElement("img");
+    logo.src = "{{ '/img/vande-logo-low.png' | relative_url }}";
+    logo.alt = "Alexandre Vandemoortele";
+    logo.loading = "lazy";
+    logo.decoding = "async";
+
+    siteTitle.textContent = "";
+    siteTitle.setAttribute("aria-label", "Alexandre Vandemoortele");
+    siteTitle.appendChild(logo);
+  });
+</script>
