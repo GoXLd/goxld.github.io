@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
 
-{% if page.collection == "posts" %}
+{% if page.collection == "posts" and page.layout == "post" and page.ads == true %}
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2004239045280909"
   crossorigin="anonymous"></script>
 {% endif %}
