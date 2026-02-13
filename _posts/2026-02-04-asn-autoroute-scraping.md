@@ -1,15 +1,17 @@
 ---
 title: ASN — l'autoroute du scraping
-description: Comment j'ai réduit mes coûts de proxy de 68 $ à 5,50 $ par mois en analysant les ASN et en automatisant la qualité.
+description: Comment j'ai réduit mes coûts de proxy de 68$ à 5.50$ par mois en analysant les ASN et en automatisant la qualité.
 date: 2026-02-04
 tags: [scraping, proxy, asn, reseau, automatisation]
 author: GoXLd
 pin: false
 toc: false
-published: false
+published: true
+image:
+  path: img/asn/asn.jpg
+  lqip: data:image/jpeg;base64,/9j/4QDKRXhpZgAATU0AKgAAAAgABgESAAMAAAABAAEAAAEaAAUAAAABAAAAVgEbAAUAAAABAAAAXgEoAAMAAAABAAIAAAITAAMAAAABAAEAAIdpAAQAAAABAAAAZgAAAAAAAABIAAAAAQAAAEgAAAABAAeQAAAHAAAABDAyMjGRAQAHAAAABAECAwCgAAAHAAAABDAxMDCgAQADAAAAAQABAACgAgAEAAAAAQAAABOgAwAEAAAAAQAAAAqkBgADAAAAAQAAAAAAAAAAAAD/2wCEAAEBAQEBAQIBAQIDAgICAwQDAwMDBAUEBAQEBAUGBQUFBQUFBgYGBgYGBgYHBwcHBwcICAgICAkJCQkJCQkJCQkBAQEBAgICBAICBAkGBQYJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCf/dAAQAAv/AABEIAAoAEwMBIgACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AP0W+FExXW9G8J+N7u10mKPTriS9uJZhE0bxwL5TGVz8mZZUDKBt4AIHUY/7Zlv8JPAHwCvvihqi3f8AaFpc2Bitllsbq8Ed2Yo03wybYSquWeceeVCEMhZdor5q8SgW3izWdKth5drvmTyV4j2+VaDbtHGMMwxjufWuW8eeD/CUfi34YXsel2izano0Ed44gjDXCG2dysp25cF/mw2RnnrX5dgvZRs5R/q1z+gpU6nt41VNpK2npqfC5+D2q6skeq6LqdubS5jjliyTFhXUMBslO/5c4yc5xkEgg03/AIUd4o/6CNt/3+T/ABrxDxcq6h4p1C6vwJ5TcSKXk+ZsKdqjJ7AAAegGK537BY/88Y/++R/hX6BSjLlWv4HymNT9tL1Z/9k=
 ads: true
 ---
-
 # ASN — l'autoroute du scraping
 
 ## Comment j'ai réduit mes coûts de proxy par 10 et arrêté de me battre avec les 429
@@ -17,9 +19,10 @@ ads: true
 En informatique, beaucoup de problèmes deviennent plus simples quand on trouve une bonne analogie dans le monde réel.
 Pour moi, cette analogie a été l'autoroute : l'ASN.
 
-Ces derniers mois, j'ai réussi à réduire mes coûts de proxy de **68 $ à 5,50 $ par mois**, sans perte de qualité de données.
+Ces derniers mois, j'ai réussi à réduire mes coûts de proxy de **68$ à 5,50$ par mois**, sans perte de qualité de données.
 Dans cet article, j'explique comment et pourquoi cela a fonctionné.
 
+![AE8 Geekom - mon premier mini PC](img/asn/forfait_webshare.png){: .shadow }
 ---
 
 ## Comment tout a commencé

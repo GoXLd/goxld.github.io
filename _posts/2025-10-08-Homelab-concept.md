@@ -21,6 +21,25 @@ Aujourd’hui, je vous présente la **troisième version** de mon **HomeLab** �
 
 ![Homelab main photo](homelab.jpg){: .shadow }
 
+## UPDATE - fevrier 2026
+
+Après plus de **90 jours** de fonctionnement continu, le lab reste **stable**, sans problème ni interruption.
+
+![Uptime du HomeLab](uptime.png){: .shadow }
+
+Actuellement, un seul serveur est allumé : le **node1 (Ryzen 7 7730U, 64 Go RAM)**.  
+Les autres nœuds sont éteints pour économiser l’énergie, et cette machine suffit largement pour tous mes conteneurs et mes VM.
+
+Début **décembre 2025**, j’ai coupé `node2` et `node3` pour mesurer l’impact énergétique, car la consommation avait dépassé **30 kWh/mois**.  
+Après optimisation, seuls restent actifs : les deux switches, le serveur principal, le KVM, les capteurs d’air et les ventilateurs du rack.
+
+![Consommation décembre 2025 / janvier 2026](consommation.jpg){: .shadow }
+
+En **janvier 2026**, on voit clairement que la consommation reste sous **20 kWh/mois**, malgré une utilisation plus active du lab.
+
+
+
+
 ## Philosophie du projet
 
 >Avant de parler technique, je veux partager mes priorités dans la conception d’un HomeLab :
