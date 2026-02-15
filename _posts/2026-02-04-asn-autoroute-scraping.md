@@ -16,19 +16,40 @@ ads: true
 
 ## Comment j'ai réduit mes coûts de proxy par 10 et arrêté de me battre avec les 429
 
-En informatique, beaucoup de problèmes deviennent plus simples quand on trouve une bonne analogie dans le monde réel.
-Pour moi, cette analogie a été l'autoroute : l'ASN.
+En informatique, beaucoup de problèmes deviennent plus simples quand on trouve une bonne analogie dans le monde réel. Pour moi, cette analogie a été l'autoroute pour l'ASN.
 
 Ces derniers mois, j'ai réussi à réduire mes coûts de proxy de **68$ à 5,50$ par mois**, sans perte de qualité de données.
-Dans cet article, j'explique comment et pourquoi cela a fonctionné.
 
-![AE8 Geekom - mon premier mini PC](img/asn/forfait_webshare.png){: .shadow }
+![Webshare](img/asn/forfait_webshare.png){: .shadow }
+
+> Le chiffre est volontairement marquant, mais le point important est la méthode.
+> Oui, passer directement sur du proxy résidentiel premium (ou d'autre service par exemple Bright Data) peut souvent augmenter le taux de succès plus vite[^residential].
+> Mais ce confort a un coût élevé et masque la cause réelle des erreurs.
+> Ici, je partage surtout une synthèse de trois mois d'ajustements sur plusieurs pools mondiaux pour garder la performance sans dépendre uniquement du budget.
+> Dans la pratique, beaucoup de solutions "scraper-as-a-service" restent coûteuses et peu fiables sur des cibles spécifiques (par exemple Leboncoin ou Steam Market), d'où l'intérêt de construire une chaîne adaptée à son propre cas d'usage.
+{: .prompt-info }
+
+Dans cet article, j'explique comment et pourquoi cela a fonctionné.
 ---
 
 ## Comment tout a commencé
 
-Les trois derniers mois, j'ai travaillé presque en continu sur mon propre scraper.
-Je suis parti de zéro et j'ai progressivement complexifié l'architecture.
+Pour le contexte métier derrière mes tests, j'ai aussi publié un article dédié :
+[Pourquoi Steam Market est un excellent terrain d'apprentissage]({% post_url 2026-02-14-pourquoi-steam-market %}).
+
+J'ai travaillé presque en continu sur mon propre scraper. Je ne partais pas totalement de zéro : j'avais déjà des scripts Google Apps Script (`.gs`) en production.
+`gXd.node/scripts`
+{: .filepath}
+![Terminal Logs - local.node - scripts](img/asn/parsing_terminal.webp){: .shadow }
+Mais avec le temps, le taux de succès de `urlFetch` pouvait tomber vers 15 % sur certaines cibles, ce qui devenait critique.
+Même avec une limite quotidienne théorique élevée (souvent citée autour de 20k requêtes/jour[^urlfetch]), les limites réelles d'usage restent plus complexes. 
+En pratique, sur mon scénario, j'ai constaté une zone de stabilité autour de **10k requêtes/jour** avec `urlFetch`, mais ce seuil reste dynamique :
+en augmentant la fréquence, il m'est déjà arrivé de voir des erreurs apparaître avant ce volume.
+
+![Exemple de limitation Apps Script](img/asn/appscript_limits.webp){: .shadow }
+
+
+J'ai donc progressivement complexifié l'architecture.
 
 Avant, tout était simple :
 
@@ -41,19 +62,76 @@ Mais ces dernières années, les backends des grands services se sont beaucoup c
 
 Les erreurs **429** ont commencé à apparaître même avec une charge prudente.
 
+> Je ne dépassais pourtant jamais 1 requête/seconde et je n'utilisais pas de multi-thread agressif.
+> En moyenne, chaque script restait autour de 1 requête/minute vers le service cible.
+> Le reste du trafic passait sur des canaux prioritaires (API internes, base de données, services système), donc hors du flux de scraping classique.
+{: .prompt-danger }
+
 ---
 
 ## Ma base de défense
 
 Au moment des tests, j'avais déjà un système assez élaboré :
 
-- pas plus d'une requête par seconde sur 150 proxys,
-- timing dynamique + jitter à 15 %,
-- changement automatique d'adresses,
-- chaine de repli : Google → Proxy → Node,
-- serveurs propres dans plusieurs datacenters avec des IPv4 "propres",
+- pas plus d'une requête par seconde sur 100+ proxys,
+- timing dynamique + jitter à 15 %
+```js
+function withJitter(baseDelayMs = 1000, jitterPercent = 0.15) {
+  const delta = baseDelayMs * jitterPercent;
+  return Math.round(baseDelayMs + (Math.random() * 2 - 1) * delta);
+}
+```
+{: file="scripts/jitter.js"}
+
+- changement automatique d'adresses
+```js
+class ProxyRotator {
+  constructor(proxies) {
+    this.proxies = proxies;
+    this.index = 0;
+  }
+
+  next() {
+    const proxy = this.proxies[this.index % this.proxies.length];
+    this.index += 1;
+    return proxy;
+  }
+}
+```
+{: file="scripts/proxy-rotator.js"}
+
+- chaine de repli : Google → Proxy → Node
+La logique est volontairement progressive :
+on tente d'abord les adresses Google (meilleure latence/coût),
+puis on passe sur les proxys rotatifs,
+et enfin sur des instances IPv4 dédiées (pool privé utilisé uniquement par moi) quand la cible devient trop restrictive.
+
+![Taux de succès par chaîne AppScript -> Proxy -> Node](img/asn/success_rate_appscript_proxy_node.webp){: .shadow }
+- serveurs propres dans plusieurs datacenters avec des IPv4 "propres"
+Logs sur le serveur gXd.node
+`gXd.node/logs/scraper-traffic.log`
+{: .filepath}
+![Webshare](img/asn/logs.webp){: .shadow }
 - système de rotation "Feu tricolore",
 - émulation de différents appareils et navigateurs.
+
+Extraits simplifiés de la logique (version pédagogique) :
+
+
+```js
+async function fetchWithFallback(request) {
+  try {
+    return await fetchViaGoogle(request);
+  } catch {
+    try {
+      return await fetchViaProxy(request);
+    } catch {
+      return await fetchViaNode(request);
+    }
+  }
+}
+```
+{: file="scripts/fetch-with-fallback.js"}
 
 Sur le papier, tout était correct.
 Mais les résultats variaient toujours fortement selon le pays et selon les pools.
@@ -70,6 +148,18 @@ Dans un même pays, différents proxys affichaient :
 - 70 %,
 - parfois moins de 50 %.
 
+La capture ci-dessous confirme l'idée : à pays égal, le taux de réussite varie fortement selon l'ASN.
+
+![Différences de réussite par ASN](img/asn/be_replaced_ips.webp){: .shadow }
+
+On remarque aussi que l'ASN "faible" a moins de requêtes.
+Ce n'est pas un biais de mesure : c'est l'effet direct de l'optimisation.
+
+Dès qu'un proxy montre une dérive (429, timeout, latence instable), il est remplacé rapidement.
+L'objectif n'est pas d'accumuler 1000 échecs sur un proxy mort, mais de couper la perte le plus tôt possible.
+
+Le seuil de remplacement reste volontairement individuel : il dépend du coût du pool, de la tolérance aux erreurs et du rythme de collecte.
+
 Pourtant :
 
 - la charge était identique,
@@ -77,6 +167,9 @@ Pourtant :
 - le timing identique.
 
 La différence se résumait à un seul paramètre : **l'ASN**.
+
+> Quand des IP différentes d'un même pays chutent en même temps, le signal "ASN" devient plus fiable que le signal "IP".
+{: .prompt-tip }
 
 ---
 
@@ -243,3 +336,6 @@ Avant, je payais 68 $ pour des données instables.
 Aujourd'hui, 5,50 $ pour un résultat prévisible.
 
 Tout ça pour un seul paramètre que j'ignorais : l'ASN.
+
+[^residential]: Les proxys résidentiels premium améliorent souvent la délivrabilité, mais leur coût mensuel peut vite dépasser celui d'une optimisation technique sur ASN.
+[^urlfetch]: La limite "20k/jour" est une référence fréquente selon les configurations, mais la limite utile dépend aussi du type de script, de la cible et des quotas réellement appliqués.

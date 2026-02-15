@@ -16,10 +16,10 @@ timezone: Europe/Paris
 
 title: Alexandre Vandemoortèle # the main title
 
-tagline: Enthusiast of Google Apps Script | Proxmox | Open WebUI. # it will display as the sub-title
+tagline: Ingénieur (Faculté de technologie) / Administrateur d’infrastructures sécurisées / CISCO CCNA # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
-  A short overview of my works dedicated to Google Sheets and Google App Script.
+  A short overview of my works.
 
 # Fill in the protocol & hostname for your site.
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
