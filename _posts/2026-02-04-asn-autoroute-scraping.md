@@ -47,7 +47,23 @@ C'est l'équivalent d'une enveloppe livrée sans lettre à l'intérieur.
 Dans cet article, j'explique comment et pourquoi cela a fonctionné.
 ---
 
-## Comment tout a commencé
+## Sommaire rapide
+
+- [Comment tout a commencé](#comment-tout-a-commence)
+- [Ma base de défense](#ma-base-de-defense)
+- [Une observation étrange](#observation-etrange)
+- [Hypothèse ASN](#hypothese-asn)
+- [Comment je l'ai vérifié](#comment-je-l-ai-verifie)
+- [Le système "Feu tricolore"](#le-systeme-feu-tricolore)
+- [Le rôle de l'ASN dans le "Feu tricolore"](#role-de-l-asn-dans-le-feu-tricolore)
+- [Résultat](#resultat)
+- [Pourquoi l'analogie routière fonctionne](#pourquoi-l-analogie-routiere-fonctionne)
+- [Conclusion - ASNRank.com](#conclusion-asnrank-com)
+- [Ce que vous pouvez faire dès maintenant](#ce-que-vous-pouvez-faire-des-maintenant)
+
+---
+
+## Comment tout a commencé {#comment-tout-a-commence}
 
 Pour le contexte métier derrière mes tests, j'ai aussi publié un article dédié :
 [Pourquoi Steam Market est un excellent terrain d'apprentissage]({% post_url 2026-01-14-pourquoi-steam-market %}).
@@ -83,7 +99,7 @@ Les erreurs **429** ont commencé à apparaître même avec une charge prudente,
 
 ---
 
-## Ma base de défense (version renforcée anti-blocage)
+## Ma base de défense (version renforcée anti-blocage) {#ma-base-de-defense}
 
 Au moment des tests, j'avais déjà un système assez élaboré :
 
@@ -161,10 +177,9 @@ Mais les résultats variaient toujours fortement selon le pays et selon les pool
 
 ---
 
-## Une observation étrange
+## Une observation étrange {#observation-etrange}
 
 Avec le temps, j'ai remarqué une régularité intéressante.
-
 Dans un même pays, différents proxys affichaient :
 
 - 90 % de taux de succès,
@@ -178,12 +193,11 @@ La capture ci-dessous confirme l'idée : à pays égal, le taux de réussite var
 On remarque aussi que l'ASN "faible" a moins de requêtes.
 Ce n'est pas un biais de mesure : c'est l'effet direct de l'optimisation.
 
-Dès qu'un proxy montre une dérive (429, timeout, latence instable), il est remplacé rapidement.
-L'objectif n'est pas d'accumuler 1000 échecs sur un proxy mort, mais de couper la perte le plus tôt possible.
+Dès qu'un proxy montre une dérive (429, timeout, latence instable), il est remplacé rapidement. L'objectif n'est pas d'accumuler 1000 échecs sur un proxy mort, mais de couper la perte le plus tôt possible.
 
 Le seuil de remplacement reste volontairement individuel : il dépend du coût du pool, de la tolérance aux erreurs et du rythme de collecte.
 
-Pourtant :
+<b>Pourtant :</b>
 - la charge était identique,
 - le comportement identique,
 - le timing identique.
@@ -198,28 +212,25 @@ La différence se résumait à un seul paramètre : **l'ASN**.
 
 ---
 
-## Hypothèse : les limites ne sont pas par IP, mais par ASN
+## Hypothèse : les limites ne sont pas par IP, mais par ASN {#hypothese-asn}
 
-Une hypothèse s'est imposée :
+<b>Une hypothèse s'est imposée :</b>
 
-Les services modernes limitent de plus en plus non pas les IP isolées, mais des **systèmes autonomes entiers (ASN)**.
+<i>Les services modernes limitent de plus en plus non pas les IP isolées, mais des blocs d'adresses de **systèmes autonomes entiers (ASN)**.</i>
 
 La logique est simple :
-
-Si un ASN contient beaucoup d'activité suspecte, il est plus simple de ralentir tout le bloc que de filtrer adresse par adresse.
+Si un bloc ASN contient beaucoup d'activité suspecte, il est plus simple de ralentir tout le bloc que de filtrer adresse par adresse.
 
 Conséquences :
-
 - même des IP "propres" commencent à recevoir des 429,
 - le taux de succès baisse,
 - les coûts augmentent.
 
-Si, dans le même ASN, quelqu'un d'autre fait du scraping agressif, vous en subissez les effets.
+Si, dans le même bloc ASN (/24 /23 /22 etc.), quelqu'un d'autre fait du scraping agressif, vous en subissez les effets.
 
 ---
 
-## Comment je l'ai vérifié
-
+## Comment je l'ai vérifié {#comment-je-l-ai-verifie}
 J'ai commencé à collecter des statistiques par ASN :
 
 - taux de succès,
@@ -230,24 +241,22 @@ J'ai commencé à collecter des statistiques par ASN :
 Après quelques semaines, une tendance claire est apparue :
 
 - dès qu'un ASN "décroche",
-- tous les IP en son sein chutent,
-- changer d'adresse n'aide pas,
-- changer d'ASN aide.
+- toutes les IP en son sein chutent,
+- changer d'adresse n'aide pas (changer d'ASN - oui).
 
 Ce n'est pas une preuve formelle, mais la corrélation était trop stable pour être un hasard.
 
-Un point important : certaines baisses de performance viennent d'incidents globaux hors de contrôle local.
+<b>Un point important :</b> certaines baisses de performance viennent d'incidents globaux hors de contrôle local.
 Lors de perturbations Cloudflare à grande échelle, plusieurs pools peuvent chuter en parallèle, même avec une bonne hygiène de scraping.
 
-![Impact d'un incident global sur les statistiques proxy](img/asn/proxy_stats.png){: .shadow }
+![Impact d'un incident global sur les statistiques proxy](img/asn/proxy_stats.png)
 
 > À l'échelle d'Internet, les incidents des grands opérateurs deviennent vite des problèmes partagés.
 {: .prompt-warning }
 
-
 ---
 
-## Le système "Feu tricolore"
+## Le système "Feu tricolore" {#le-systeme-feu-tricolore}
 
 Pour automatiser la qualité des proxys, j'ai mis en place un système "Feu tricolore".
 Le principe est simple, comme en logistique.
@@ -264,21 +273,7 @@ Ce workflow illustre la vérification continue de la "route" (l'ASN) et pas seul
 
 ---
 
-## Pourquoi c'est utile
-
-Imaginons :
-
-- un proxy a 99 % de réussite,
-- puis il se dégrade,
-- à cause de la rotation, le système ne le remarque que plusieurs jours après.
-
-Pendant ce temps, des milliers de requêtes partent dans le vide, avec un coût réel.
-
-Le "Feu tricolore" permet de filtrer les mauvaises adresses en quelques heures, pas en semaines.
-
----
-
-## Le rôle de l'ASN dans le "Feu tricolore"
+## Le rôle de l'ASN dans le "Feu tricolore" {#role-de-l-asn-dans-le-feu-tricolore}
 
 Avec le temps, j'ai ajouté un niveau d'agrégation :
 
@@ -299,7 +294,21 @@ Cette brique n'est pas fournie nativement par Webshare: c'est une couche maison 
 
 ---
 
-## Résultat
+## Pourquoi c'est utile
+
+Imaginons :
+
+- un proxy a 99 % de réussite,
+- puis il se dégrade,
+- à cause de la rotation, le système ne le remarque que plusieurs jours après.
+
+Pendant ce temps, des milliers de requêtes partent dans le vide, avec un coût réel.
+
+Le "Feu tricolore" permet de filtrer les mauvaises adresses en quelques heures, pas en semaines.
+
+---
+
+## Résultat {#resultat}
 
 Après l'intégration de l'analyse ASN et du "Feu tricolore" :
 
@@ -319,7 +328,7 @@ Pour la même charge.
 
 ---
 
-## Pourquoi l'analogie routière fonctionne
+## Pourquoi l'analogie routière fonctionne {#pourquoi-l-analogie-routiere-fonctionne}
 
 Un ASN, c'est une autoroute.
 
@@ -332,10 +341,12 @@ J'ai arrêté de me battre avec les voitures individuelles et j'ai commencé à 
 
 ---
 
-## Conclusion - ASNRank.com
+## Conclusion - ASNRank.com {#conclusion-asnrank-com}
 
 Après ce travail, j'ai lancé **ASNRank.com** pour industrialiser cette logique de scoring réseau.
 Le service centralise le classement des ASN, le suivi de dérive et la priorisation des routes selon la qualité réelle.
+
+![Aperçu de la plateforme ASNRank](img/asn/asnrank.webp){: .shadow }
 
 Un article dédié est en préparation :
 - *ASNRank.com — brouillon de l'article en cours de rédaction (publication à venir).*
@@ -354,7 +365,7 @@ Sinon, on brûle simplement son budget.
 
 ---
 
-## Ce que vous pouvez faire dès maintenant
+## Ce que vous pouvez faire dès maintenant {#ce-que-vous-pouvez-faire-des-maintenant}
 
 Si vous faites du scraping :
 
@@ -366,14 +377,8 @@ Si vous faites du scraping :
 
 Cela se rentabilise très vite.
 
+<b>Merci pour votre attention !</b>
+
 ---
-
-## En guise de conclusion
-
-Avant, je payais 68 $ pour des données instables.
-Aujourd'hui, 5,50 $ pour un résultat prévisible.
-
-Tout ça pour un seul paramètre que j'ignorais : l'ASN.
-
 [^residential]: Les proxys résidentiels premium améliorent souvent la délivrabilité, mais leur coût mensuel peut vite dépasser celui d'une optimisation technique sur ASN.
 [^urlfetch]: La limite "20k/jour" est une référence fréquente selon les configurations, mais la limite utile dépend aussi du type de script, de la cible et des quotas réellement appliqués.
