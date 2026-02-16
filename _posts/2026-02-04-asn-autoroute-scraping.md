@@ -1,6 +1,6 @@
 ---
 title: ASN — l'autoroute du scraping
-description: Comment j'ai réduit mes coûts de proxy de 68$ à 5.50$ par mois en analysant les ASN et en automatisant la qualité.
+description: Retour d'expérience sur la construction d'un scraper robuste sans exploser le budget proxy.
 date: 2026-02-04
 tags: [scraping, proxy, asn, reseau, automatisation]
 author: GoXLd
@@ -14,20 +14,35 @@ ads: true
 ---
 # ASN — l'autoroute du scraping
 
-## Comment j'ai réduit mes coûts de proxy par 10 et arrêté de me battre avec les 429
+## Comment j'ai réduit mes coûts de proxy et arrêté de me battre avec les 429
 
-En informatique, beaucoup de problèmes deviennent plus simples quand on trouve une bonne analogie dans le monde réel. Pour moi, cette analogie a été l'autoroute pour l'ASN.
+> <b>Avertissement :</b> cet article documente une recherche technique et une analyse de marché.
+> Certaines captures peuvent contenir des données sensibles historiques, mais elles ne sont plus exploitables en production.
+> Le choix de ne pas flouter est volontaire, pour partager une méthode réelle et vérifiable.
+> Les retours critiques sont les bienvenus.
+{: .prompt-info }
 
-Ces derniers mois, j'ai réussi à réduire mes coûts de proxy de **68$ à 5,50$ par mois**, sans perte de qualité de données.
+En informatique, beaucoup de problèmes deviennent plus simples quand on trouve une bonne analogie dans le monde réel. Pour moi, cette analogie a été l'autoroute = l'ASN.
 
 ![Webshare](img/asn/forfait_webshare.png){: .shadow }
+*Résultat visible sur la facture proxy après optimisation.*
 
 > Le chiffre est volontairement marquant, mais le point important est la méthode.
-> Oui, passer directement sur du proxy résidentiel premium (ou d'autre service par exemple Bright Data) peut souvent augmenter le taux de succès plus vite[^residential].
+> Oui, passer directement sur du proxy résidentiel premium (ou un autre service, par exemple Bright Data) peut souvent augmenter le taux de succès plus vite[^residential].
 > Mais ce confort a un coût élevé et masque la cause réelle des erreurs.
 > Ici, je partage surtout une synthèse de trois mois d'ajustements sur plusieurs pools mondiaux pour garder la performance sans dépendre uniquement du budget.
 > Dans la pratique, beaucoup de solutions "scraper-as-a-service" restent coûteuses et peu fiables sur des cibles spécifiques (par exemple Leboncoin ou Steam Market), d'où l'intérêt de construire une chaîne adaptée à son propre cas d'usage.
-{: .prompt-info }
+{: .prompt-tip }
+
+L'argument décisif a été la **détection des réponses "bouchons"**.
+Vous contournez Cloudflare, le serveur répond `200`, vous recevez du HTML... mais ce n'est qu'une page vide ou un faux contenu.
+Pour un service *pay as you go*, la requête est facturée comme "réussie", alors que le résultat métier est nul.
+C'est l'équivalent d'une enveloppe livrée sans lettre à l'intérieur.
+
+![Exemple de réponse vide malgré un statut 200](img/asn/small_reponse.png){: .shadow }
+
+> Livrer une réponse ne veut pas dire livrer la donnée utile.
+{: .prompt-warning }
 
 Dans cet article, j'explique comment et pourquoi cela a fonctionné.
 ---
@@ -35,9 +50,9 @@ Dans cet article, j'explique comment et pourquoi cela a fonctionné.
 ## Comment tout a commencé
 
 Pour le contexte métier derrière mes tests, j'ai aussi publié un article dédié :
-[Pourquoi Steam Market est un excellent terrain d'apprentissage]({% post_url 2026-02-14-pourquoi-steam-market %}).
+[Pourquoi Steam Market est un excellent terrain d'apprentissage]({% post_url 2026-01-14-pourquoi-steam-market %}).
 
-J'ai travaillé presque en continu sur mon propre scraper. Je ne partais pas totalement de zéro : j'avais déjà des scripts Google Apps Script (`.gs`) en production.
+J'ai travaillé presque en continu (un marathon de trois mois, sans jours de repos) sur mon propre scraper. Je ne partais pas totalement de zéro : j'avais déjà des scripts Google Apps Script (`.gs`) en production.
 `gXd.node/scripts`
 {: .filepath}
 ![Terminal Logs - local.node - scripts](img/asn/parsing_terminal.webp){: .shadow }
@@ -48,7 +63,6 @@ en augmentant la fréquence, il m'est déjà arrivé de voir des erreurs appara�
 
 ![Exemple de limitation Apps Script](img/asn/appscript_limits.webp){: .shadow }
 
-
 J'ai donc progressivement complexifié l'architecture.
 
 Avant, tout était simple :
@@ -56,11 +70,11 @@ Avant, tout était simple :
 - ajouter du jitter,
 - limiter la fréquence,
 - activer la rotation d'IP,
-- changer de pays.
+- changer de pays (dans de rares cas)
 
-Mais ces dernières années, les backends des grands services se sont beaucoup complexifiés. Les méthodes simples ont cessé de fonctionner.
+Mais ces dernières années (notamment avec l'essor de l'IA), les backends des grands services se sont beaucoup complexifiés. Les méthodes simples ont cessé de fonctionner.
 
-Les erreurs **429** ont commencé à apparaître même avec une charge prudente.
+Les erreurs **429** ont commencé à apparaître même avec une charge prudente, y compris en appliquant d'anciennes méthodes de contournement.
 
 > Je ne dépassais pourtant jamais 1 requête/seconde et je n'utilisais pas de multi-thread agressif.
 > En moyenne, chaque script restait autour de 1 requête/minute vers le service cible.
@@ -69,7 +83,7 @@ Les erreurs **429** ont commencé à apparaître même avec une charge prudente.
 
 ---
 
-## Ma base de défense
+## Ma base de défense (version renforcée anti-blocage)
 
 Au moment des tests, j'avais déjà un système assez élaboré :
 
@@ -108,6 +122,15 @@ et enfin sur des instances IPv4 dédiées (pool privé utilisé uniquement par m
 
 ![Taux de succès par chaîne AppScript -> Proxy -> Node](img/asn/success_rate_appscript_proxy_node.webp){: .shadow }
 - serveurs propres dans plusieurs datacenters avec des IPv4 "propres"
+
+Les nœuds sont aujourd'hui répartis entre la France, l'Allemagne, les Pays-Bas et les États-Unis.
+L'extension vers Singapour, la Suisse et de nouveaux points aux États-Unis est planifiée, mais ce n'est pas prioritaire pour l'instant.
+
+![Répartition actuelle des nœuds](img/asn/nodes.png){: .right .shadow }
+
+Le taux de disponibilité actuel se maintient globalement entre **98 % et 99 %**, ce qui permet de prioriser l'optimisation logicielle avant l'expansion géographique.
+![Disponibilité des nœuds](img/asn/nodes_success_rate.png){:.left .shadow }
+
 Logs sur le serveur gXd.node
 `gXd.node/logs/scraper-traffic.log`
 {: .filepath}
@@ -148,7 +171,7 @@ Dans un même pays, différents proxys affichaient :
 - 70 %,
 - parfois moins de 50 %.
 
-La capture ci-dessous confirme l'idée : à pays égal, le taux de réussite varie fortement selon l'ASN.
+La capture ci-dessous confirme l'idée : à pays égal, le taux de réussite varie fortement selon l'ASN et selon les blocs d'adresses associés.
 
 ![Différences de réussite par ASN](img/asn/be_replaced_ips.webp){: .shadow }
 
@@ -161,15 +184,17 @@ L'objectif n'est pas d'accumuler 1000 échecs sur un proxy mort, mais de couper 
 Le seuil de remplacement reste volontairement individuel : il dépend du coût du pool, de la tolérance aux erreurs et du rythme de collecte.
 
 Pourtant :
-
 - la charge était identique,
 - le comportement identique,
 - le timing identique.
 
 La différence se résumait à un seul paramètre : **l'ASN**.
 
-> Quand des IP différentes d'un même pays chutent en même temps, le signal "ASN" devient plus fiable que le signal "IP".
+> Les serveurs restent en ligne, mais la qualité du passage peut se dégrader brutalement.
+> Le but est donc de choisir les "autoroutes ASN" les moins saturées pour garder un trafic stable et rentable.
 {: .prompt-tip }
+
+![Choisir les autoroutes ASN les moins saturées](img/asn/traffic_scrapper.png){: .shadow }
 
 ---
 
@@ -211,6 +236,15 @@ Après quelques semaines, une tendance claire est apparue :
 
 Ce n'est pas une preuve formelle, mais la corrélation était trop stable pour être un hasard.
 
+Un point important : certaines baisses de performance viennent d'incidents globaux hors de contrôle local.
+Lors de perturbations Cloudflare à grande échelle, plusieurs pools peuvent chuter en parallèle, même avec une bonne hygiène de scraping.
+
+![Impact d'un incident global sur les statistiques proxy](img/asn/proxy_stats.png){: .shadow }
+
+> À l'échelle d'Internet, les incidents des grands opérateurs deviennent vite des problèmes partagés.
+{: .prompt-warning }
+
+
 ---
 
 ## Le système "Feu tricolore"
@@ -218,24 +252,15 @@ Ce n'est pas une preuve formelle, mais la corrélation était trop stable pour �
 Pour automatiser la qualité des proxys, j'ai mis en place un système "Feu tricolore".
 Le principe est simple, comme en logistique.
 
-**Vert**
+| État | Condition | Action |
+| ---- | --------- | ------ |
+| **Vert** | Adresse stable, succès au-dessus du seuil | Utilisation active dans la rotation |
+| **Jaune** | Série de 10 erreurs consécutives | Mise en pause pendant quelques heures |
+| **Rouge** | Nouvelle dérive après phase de repos | Exclusion du pool |
 
-L'adresse est stable.
-Le taux de succès dépasse le seuil.
+![Workflow "Feu tricolore" pour le contrôle des autoroutes ASN](img/asn/feu_tricolor.png){: .shadow }
 
-→ Utilisée activement.
-
-**Jaune**
-
-10 erreurs d'affilée.
-
-→ L'adresse part "se reposer" quelques heures.
-
-**Rouge**
-
-Après récupération, nouvelle série d'erreurs.
-
-→ Exclusion complète du pool.
+Ce workflow illustre la vérification continue de la "route" (l'ASN) et pas seulement d'une IP isolée.
 
 ---
 
@@ -262,6 +287,15 @@ Adresse → ASN → Pool.
 Si plusieurs IP d'un même ASN commencent à générer des erreurs, la priorité de toute la plage baisse.
 
 En pratique, le système apprend à éviter les autoroutes problématiques.
+
+En parallèle, un job serveur vérifie plusieurs fois par jour les nouveaux masques réseau et les compare à l'historique interne.
+Cette brique n'est pas fournie nativement par Webshare: c'est une couche maison qui améliore la sélection proactive des pools.
+
+![Mise à jour automatique des masques réseau](img/asn/update_masks.png){: .shadow }
+
+> Sans endpoint exploitable, même un très bon assistant IA ne peut pas deviner le flux réel.
+> Il faut d'abord comprendre comment la page génère son hypertexte dynamique pour automatiser proprement.
+{: .prompt-info }
 
 ---
 
@@ -294,15 +328,19 @@ Un ASN, c'est une autoroute.
 - Le trafic est la marchandise.
 
 On peut changer de voitures, mais si la route est saturée, on reste bloqué.
-
 J'ai arrêté de me battre avec les voitures individuelles et j'ai commencé à choisir les routes.
 
 ---
 
-## Conclusion
+## Conclusion - ASNRank.com
+
+Après ce travail, j'ai lancé **ASNRank.com** pour industrialiser cette logique de scoring réseau.
+Le service centralise le classement des ASN, le suivi de dérive et la priorisation des routes selon la qualité réelle.
+
+Un article dédié est en préparation :
+- *ASNRank.com — brouillon de l'article en cours de rédaction (publication à venir).*
 
 Le point central est simple :
-
 En 2025, lutter contre les blocages seulement au niveau IP n'a plus de sens.
 
 Il faut travailler :
