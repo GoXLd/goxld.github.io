@@ -10,6 +10,7 @@ published: true
 ads: true
 image:
   path: img/linux-amazon/linux-postgressql.png
+  lqip: data:image/jpg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA4KCw0LCQ4NDA0QDw4RFiQXFhQUFiwgIRokNC43NjMuMjI6QVNGOj1OPjIySGJJTlZYXV5dOEVmbWVabFNbXVn/2wBDAQ8QEBYTFioXFypZOzI7WVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVn/wAARCAAJABIDASIAAhEBAxEB/8QAGQAAAgMBAAAAAAAAAAAAAAAAAAUBAwQG/8QAIxAAAgICAQIHAAAAAAAAAAAAAQIAAwQFESFyFDEyMzRxsf/EABUBAQEAAAAAAAAAAAAAAAAAAAEE/8QAGxEAAgIDAQAAAAAAAAAAAAAAAAECEQMEITH/2gAMAwEAAhEDEQA/AOx2G+qwMo470u5ABJBHHWKNznXeMRqbbK0epXChuOORG+x+WfoSMn1V9i/kNiKeNVxkmRSlas2Ybs2HQzMSTWpJJ8+kJdT7KdohBeFCXD//2Q==
 ---
 
 # Linux 7.0 et PostgreSQL sur ARM64 - analyse d'une régression
@@ -63,7 +64,6 @@ Avant de passer à Linux 7.0 (ou à une distribution qui l'intègre):
 
 ## Sources
 
-- [Article sur Habr](https://habr.com/ru/news/1019386/)
 - [Message LKML depuis Amazon](https://lore.kernel.org/lkml/20260403191942.21410-1-dipiets@amazon.it/)
 - [Branche Linux v7.0-rc6](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/?h=v7.0-rc6)
 - [Commit discuté](https://web.git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=7dadeaa6e851)
