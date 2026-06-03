@@ -26,3 +26,4 @@ package-lock.json
 _sass/vendors
 assets/js/dist
 img/linux-amazon/.DS_Store
+.DS_Store
