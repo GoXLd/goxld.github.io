@@ -48,9 +48,6 @@ Le cas était simple :
 
 Le but n'était pas de "réparer" Webshare. Le but était de **retirer Webshare du chemin critique le plus vite possible**.
 
-![Dashboard en mode incident avec runtime proxy coupé](/img/webshare/after_panne.png){: .shadow }
-*Vue opérationnelle après bascule : le runtime proxy est coupé, mais la plateforme continue à servir via les nœuds externes.*
-
 > Nous n’aimons pas les incidents. Pourtant, ce genre de moment donne de l’expérience, de la pratique, et fait progresser vite. Cet incident a duré huit heures...
 {: .prompt-tip }
 
@@ -366,6 +363,9 @@ Le message de résolution confirme la reprise, l'auto-restore éventuel et la fi
 *Message de retour à la normale après levée automatique du failover.*
 
 > Sur les images, vous pouvez voir que 0 proxy ont été désactivés et réactivés automatiquement. Tout est normal, puisque je les avais désactivés manuellement et qu’ils doivent donc être réactivés manuellement également.
+
+![Dashboard en mode incident avec runtime proxy coupé](/img/webshare/after_panne.png){: .shadow }
+
 Pour l’instant, tout ce que j’ai fait reste théorique et mérite d’être vérifié en pratique. J’attends avec impatience la prochaine interruption du réseau Webshare…
 Un paresseux qui n’a tout simplement pas envie d’écrire des tests. 😄
 {: .prompt-info }
