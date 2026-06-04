@@ -381,7 +381,7 @@ Un mécanisme de failover doit rester visible. J'ai donc ajouté dans le dashboa
 - un tooltip sur `Proxy runtime: disabled`
 - l'affichage de l'heure du dernier check
 
-![Statut incident Webshare détecté](/img/webshare/webshare-warning.png){: .shadow }
+![Statut incident Webshare détecté](../img/webshare/webshare-clair.png)
 *La status page Webshare fournit ici le signal externe qui déclenche la logique de protection.*
 
 Le but est simple :
