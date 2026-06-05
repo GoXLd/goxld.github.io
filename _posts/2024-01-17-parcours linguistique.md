@@ -4,7 +4,7 @@ date: 2024-02-02 11:00:00
 categories: [Personnel]
 tags: [personnel, cv, français, anglais]     # TAG names should always be lowercase
 author: GoXLd
-pin: true
+pin: false
 published: true
 image:
   path: /img/preview_translate.jpg
