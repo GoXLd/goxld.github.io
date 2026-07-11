@@ -8,7 +8,7 @@ author: GoXLd
 pin: false
 toc: true
 published: true
-ads: false
+ads: true
 mermaid: true
 media_subpath: /img/fable5/
 image:
