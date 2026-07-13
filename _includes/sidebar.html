@@ -1,13 +1,38 @@
 <!-- The Side Bar -->
 
 <aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end">
+  {% assign avatar_frame = site.nlo.branding.avatar_frame | default: 'round' | downcase %}
+  {% unless avatar_frame == 'discord' %}
+    {% assign avatar_frame = 'round' %}
+  {% endunless %}
+
   <header class="profile-wrapper">
-    <a href="{{ '/' | relative_url }}" id="avatar" class="rounded-circle">
-      {%- if site.avatar != empty and site.avatar -%}
-        {%- capture avatar_url -%}
-          {% include media-url.html src=site.avatar %}
+    <a href="{{ '/' | relative_url }}" id="avatar" class="avatar-frame-{{ avatar_frame }}">
+      {%- assign avatar_light_src = site.nlo.branding.avatar_light | default: site.avatar.light | default: site.avatar -%}
+      {%- assign avatar_dark_src = site.nlo.branding.avatar_dark | default: site.avatar.dark | default: avatar_light_src -%}
+
+      {%- if avatar_light_src != empty and avatar_light_src -%}
+        {%- capture avatar_light_url -%}
+          {% include media-url.html src=avatar_light_src %}
         {%- endcapture -%}
-        <img src="{{- avatar_url -}}" width="112" height="112" alt="avatar" onerror="this.style.display='none'">
+
+        {%- capture avatar_dark_url -%}
+          {% include media-url.html src=avatar_dark_src %}
+        {%- endcapture -%}
+
+        {% if avatar_dark_src != avatar_light_src %}
+          <img
+            class="light"
+            src="{{- avatar_light_url -}}"
+            width="146"
+            height="146"
+            alt="avatar"
+            onerror="this.style.display='none'"
+          >
+          <img class="dark" src="{{- avatar_dark_url -}}" width="146" height="146" alt="avatar" onerror="this.style.display='none'">
+        {% else %}
+          <img src="{{- avatar_light_url -}}" width="146" height="146" alt="avatar" onerror="this.style.display='none'">
+        {% endif %}
       {%- endif -%}
     </a>
 
@@ -17,7 +42,10 @@
   <!-- .profile-wrapper -->
 
   {% assign github_user = site.github.username %}
-  {% if github_user and page.layout != 'home' %}
+  {% assign nlo_github_chart = site.nlo.github_chart %}
+  {% assign nlo_sidebar_chart = nlo_github_chart.sidebar_image | default: '/assets/img/githubchart-sidebar.svg' %}
+  {% assign nlo_sidebar_chart_dark = nlo_github_chart.sidebar_image_dark | default: nlo_sidebar_chart %}
+  {% if github_user and nlo_github_chart and nlo_github_chart.enabled and page.layout != 'home' %}
     <div class="sidebar-githubchart w-100">
       <a
         class="github-activity"
@@ -27,7 +55,15 @@
         aria-label="{{ github_user }} GitHub contributions"
       >
         <img
-          src="{{ '/assets/img/githubchart-sidebar.svg' | relative_url }}"
+          class="githubchart-light"
+          src="{{ nlo_sidebar_chart | relative_url }}"
+          alt="{{ github_user }} GitHub contribution graph"
+          loading="lazy"
+          decoding="async"
+        >
+        <img
+          class="githubchart-dark"
+          src="{{ nlo_sidebar_chart_dark | relative_url }}"
           alt="{{ github_user }} GitHub contribution graph"
           loading="lazy"
           decoding="async"
@@ -38,6 +74,10 @@
 
   <nav class="flex-column flex-grow-1 w-100 ps-0">
     <ul class="nav">
+      <li class="nav-item nlo-lang-switcher-item">
+        {% include lang-switch.html lang=include.lang class='nlo-lang-switcher--sidebar w-100' %}
+      </li>
+
       <!-- home -->
       <li class="nav-item{% if page.layout == 'home' %}{{ " active" }}{% endif %}">
         <a href="{{ '/' | relative_url }}" class="nav-link">
@@ -57,16 +97,24 @@
         </li>
         <!-- .nav-item -->
       {% endfor %}
+
     </ul>
   </nav>
 
   <div class="sidebar-bottom d-flex flex-wrap  align-items-center w-100">
+    {% if jekyll.environment == 'development' %}
+      <a href="{{ '/admin' | relative_url }}" aria-label="admin" class="admin-shortcut nav-link w-100">
+        <i class="fa-fw fas fa-screwdriver-wrench"></i>
+        <span>ADMIN</span>
+      </a>
+    {% endif %}
+
     {% unless site.theme_mode %}
       <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle">
         <i class="fas fa-adjust"></i>
       </button>
 
-      {% if site.data.contact.size > 0 %}
+      {% if site.data.contact.size > 0 or jekyll.environment == 'development' %}
         <span class="icon-border"></span>
       {% endif %}
     {% endunless %}
@@ -121,6 +169,5 @@
     {% endfor %}
   </div>
   <!-- .sidebar-bottom -->
-
 </aside>
 <!-- #sidebar -->

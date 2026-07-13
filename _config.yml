@@ -1,7 +1,12 @@
 # The Site Configuration
 
-# Import the theme
-theme: jekyll-theme-chirpy
+# Theme source is vendored locally from https://github.com/GoXLd/NLO (no gem)
+plugins:
+  - jekyll-paginate
+  - jekyll-seo-tag
+  - jekyll-archives
+  - jekyll-sitemap
+  - jekyll-include-cache
 
 # The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
 # If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
@@ -136,6 +141,17 @@ assets:
     # specify the Jekyll environment, empty means both
     # only works if `assets.self_host.enabled` is 'true'
     env: production # [development | production]
+
+nlo:
+  github_chart:
+    enabled: true
+    home_image: /assets/img/githubchart.svg
+    sidebar_image: /assets/img/githubchart-sidebar.svg
+  branding:
+    logo_src: /img/vande-logo-low.png
+    logo_alt: Alexandre Vandemoortele
+  adsense:
+    client: ca-pub-2004239045280909
 
 pwa:
   enabled: true # The option for PWA feature (installable)

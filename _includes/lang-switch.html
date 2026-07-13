@@ -1,0 +1,193 @@
+{% if available_langs and available_langs.size > 1 %}
+  {% assign _current_lang = include.lang | default: lang | default: default_lang %}
+  {% assign _current_path = page.url | default: '/' %}
+  {% assign _base_path = _current_path %}
+  {% assign _path_parts = _current_path | split: '/' %}
+  {% assign _path_prefix = _path_parts[1] %}
+  {% assign _path_prefix_down = _path_prefix | downcase %}
+  {% assign _prefix_lang = '' %}
+  {% assign _render_flags = available_langs.size <= 3 %}
+
+  {% for _locale in available_langs %}
+    {% assign _locale_down = _locale | downcase %}
+    {% assign _locale_alias = _locale_down | split: '-' | first %}
+    {% if _path_prefix_down == _locale_down or _path_prefix_down == _locale_alias %}
+      {% assign _prefix_lang = _locale %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+
+  {% if _prefix_lang != '' %}
+    {% capture _prefix %}/{{ _path_prefix }}{% endcapture %}
+    {% assign _base_path = _current_path | replace_first: _prefix, '' %}
+    {% if _base_path == '' %}
+      {% assign _base_path = '/' %}
+    {% endif %}
+  {% endif %}
+
+  {% assign _label = site.data.locales[include.lang].nlo.site_version | default: site.data.locales[default_lang].nlo.site_version | default: 'Site version' %}
+  {% assign _lang_ui = include.lang | default: default_lang | downcase | split: '-' | first %}
+
+  {% if _render_flags %}
+    <div class="nlo-lang-flags {{ include.class | default: '' }}">
+      <span class="nlo-lang-flags__label">{{ _label }}</span>
+      <div class="nlo-lang-flags__list" role="group" aria-label="{{ _label }}">
+        {% for _lang_code in available_langs %}
+          {% assign _lang_prefix = _lang_code | downcase | split: '-' | first %}
+          {% assign _target = '' %}
+
+          {% if page.collection == 'posts' and page.translation_key %}
+            {% for _post in site.posts %}
+              {% assign _post_lang = _post.language | default: _post.lang | default: default_lang %}
+              {% if _post.translation_key == page.translation_key and _post_lang == _lang_code %}
+                {% assign _target = _post.url %}
+                {% break %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          {% if _target == '' %}
+            {% if _lang_code == default_lang %}
+              {% assign _target_candidate = _base_path %}
+            {% elsif _base_path == '/' %}
+              {% assign _target_candidate = '/' | append: _lang_prefix | append: '/' %}
+            {% else %}
+              {% assign _target_candidate = '/' | append: _lang_prefix | append: _base_path %}
+            {% endif %}
+
+            {% assign _target = _target_candidate %}
+            {% assign _target_exists = false %}
+
+            {% for _page in site.pages %}
+              {% if _page.url == _target_candidate %}
+                {% assign _target_exists = true %}
+                {% break %}
+              {% endif %}
+            {% endfor %}
+
+            {% unless _target_exists %}
+              {% for _post in site.posts %}
+                {% if _post.url == _target_candidate %}
+                  {% assign _target_exists = true %}
+                  {% break %}
+                {% endif %}
+              {% endfor %}
+            {% endunless %}
+
+            {% unless _target_exists %}
+              {% if _lang_code == default_lang %}
+                {% assign _target = '/' %}
+              {% else %}
+                {% assign _target = '/' | append: _lang_prefix | append: '/' %}
+              {% endif %}
+            {% endunless %}
+          {% endif %}
+
+          {% assign _flag_file = _lang_code | downcase | append: '.svg' %}
+          {% assign _lang_name = _lang_code | split: '-' | first | upcase %}
+          {% if _lang_ui == 'ru' %}
+            {% case _lang_code %}
+              {% when 'en' %}{% assign _lang_name = 'Английский' %}
+              {% when 'ru-RU' %}{% assign _lang_name = 'Русский' %}
+              {% when 'fr-FR' %}{% assign _lang_name = 'Французский' %}
+            {% endcase %}
+          {% elsif _lang_ui == 'fr' %}
+            {% case _lang_code %}
+              {% when 'en' %}{% assign _lang_name = 'Anglais' %}
+              {% when 'ru-RU' %}{% assign _lang_name = 'Russe' %}
+              {% when 'fr-FR' %}{% assign _lang_name = 'Francais' %}
+            {% endcase %}
+          {% else %}
+            {% case _lang_code %}
+              {% when 'en' %}{% assign _lang_name = 'English' %}
+              {% when 'ru-RU' %}{% assign _lang_name = 'Russian' %}
+              {% when 'fr-FR' %}{% assign _lang_name = 'French' %}
+            {% endcase %}
+          {% endif %}
+
+          <a
+            href="{{ _target | relative_url }}"
+            class="nlo-lang-flag{% if _lang_code == _current_lang %} is-active{% endif %}"
+            aria-label="{{ _label }} {{ _lang_name }}"
+            title="{{ _lang_name }}"
+          >
+            <img
+              src="{{ '/assets/img/flags/' | append: _flag_file | relative_url }}"
+              alt="{{ _lang_code }} flag"
+              width="24"
+              height="16"
+              loading="lazy"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';"
+            >
+            <span class="nlo-lang-flag__fallback">{{ _lang_code | split: '-' | first | upcase }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <label class="nlo-lang-switcher {{ include.class | default: '' }}">
+      <span class="nlo-lang-switcher__label">{{ _label }}</span>
+      <select
+        class="nlo-lang-switcher__select"
+        aria-label="{{ _label }}"
+        onchange="if (this.value) window.location.href = this.value;"
+      >
+        {% for _lang_code in available_langs %}
+          {% assign _lang_prefix = _lang_code | downcase | split: '-' | first %}
+          {% assign _target = '' %}
+
+          {% if page.collection == 'posts' and page.translation_key %}
+            {% for _post in site.posts %}
+              {% assign _post_lang = _post.language | default: _post.lang | default: default_lang %}
+              {% if _post.translation_key == page.translation_key and _post_lang == _lang_code %}
+                {% assign _target = _post.url %}
+                {% break %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          {% if _target == '' %}
+            {% if _lang_code == default_lang %}
+              {% assign _target_candidate = _base_path %}
+            {% elsif _base_path == '/' %}
+              {% assign _target_candidate = '/' | append: _lang_prefix | append: '/' %}
+            {% else %}
+              {% assign _target_candidate = '/' | append: _lang_prefix | append: _base_path %}
+            {% endif %}
+
+            {% assign _target = _target_candidate %}
+            {% assign _target_exists = false %}
+
+            {% for _page in site.pages %}
+              {% if _page.url == _target_candidate %}
+                {% assign _target_exists = true %}
+                {% break %}
+              {% endif %}
+            {% endfor %}
+
+            {% unless _target_exists %}
+              {% for _post in site.posts %}
+                {% if _post.url == _target_candidate %}
+                  {% assign _target_exists = true %}
+                  {% break %}
+                {% endif %}
+              {% endfor %}
+            {% endunless %}
+
+            {% unless _target_exists %}
+              {% if _lang_code == default_lang %}
+                {% assign _target = '/' %}
+              {% else %}
+                {% assign _target = '/' | append: _lang_prefix | append: '/' %}
+              {% endif %}
+            {% endunless %}
+          {% endif %}
+
+          <option value="{{ _target | relative_url }}" {% if _lang_code == _current_lang %}selected{% endif %}>
+            {{ _lang_code | split: '-' | first | upcase }}
+          </option>
+        {% endfor %}
+      </select>
+    </label>
+  {% endif %}
+{% endif %}
