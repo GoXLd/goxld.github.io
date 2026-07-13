@@ -50,6 +50,17 @@ jobs:
           ruby-version: 3.3
           bundler-cache: true
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install Node dependencies
+        run: npm install
+
+      - name: Build frontend assets
+        run: npm run build
+
       - name: Build site
         run: bundle exec jekyll b -d "_site${{ steps.pages.outputs.base_path }}"
         env:

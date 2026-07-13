@@ -2,7 +2,13 @@
 
 source "https://rubygems.org"
 
-gem "jekyll-theme-chirpy", "~> 7.2", ">= 7.2.4"
+# NLO theme runtime deps (theme source is vendored in-repo from https://github.com/GoXLd/NLO)
+gem "jekyll", "~> 4.3"
+gem "jekyll-paginate", "~> 1.1"
+gem "jekyll-seo-tag", "~> 2.8"
+gem "jekyll-archives", "~> 2.2"
+gem "jekyll-sitemap", "~> 1.4"
+gem "jekyll-include-cache", "~> 0.2"
 
 gem "githubchart", "~> 4.0"
 

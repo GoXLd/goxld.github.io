@@ -3,6 +3,8 @@
 # Check for changed posts
 
 Jekyll::Hooks.register :posts, :post_init do |post|
+  has_head = system('git rev-parse --verify HEAD > /dev/null 2>&1')
+  next unless has_head
 
   commit_num = `git rev-list --count HEAD "#{ post.path }"`
 

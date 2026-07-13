@@ -1,0 +1,257 @@
+---
+---
+
+/* prettier-ignore */
+@use 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
+
+/* append your custom style below */
+
+#sidebar .sidebar-githubchart {
+  padding: 0 1.25rem 1rem 2.5rem;
+  margin-top: 0.6rem;
+  margin-bottom: 0.25rem;
+}
+
+#sidebar .profile-wrapper {
+  margin-bottom: 10px;
+}
+
+@media all and (min-width: 1650px) {
+  #sidebar .sidebar-githubchart {
+    padding-left: 3.5rem;
+  }
+}
+
+#sidebar .sidebar-githubchart .github-activity {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  line-height: 0;
+}
+
+#sidebar .sidebar-githubchart img {
+  width: 100% !important;
+  height: auto !important;
+  border-radius: 4px;
+  border: 1px solid var(--main-border-color);
+  background-color: var(--main-bg);
+  box-sizing: border-box;
+  display: block;
+  opacity: 1;
+}
+
+#sidebar .sidebar-githubchart .githubchart-light,
+#post-list .home-githubchart .githubchart-light {
+  display: block;
+}
+
+#sidebar .sidebar-githubchart .githubchart-dark,
+#post-list .home-githubchart .githubchart-dark {
+  display: none;
+}
+
+html[data-mode="dark"] #sidebar .sidebar-githubchart .githubchart-dark,
+html[data-mode="dark"] #post-list .home-githubchart .githubchart-dark {
+  display: block !important;
+}
+
+html[data-mode="dark"] #sidebar .sidebar-githubchart .githubchart-light,
+html[data-mode="dark"] #post-list .home-githubchart .githubchart-light {
+  display: none !important;
+}
+
+html[data-mode="light"] #sidebar .sidebar-githubchart .githubchart-light,
+html[data-mode="light"] #post-list .home-githubchart .githubchart-light {
+  display: block !important;
+}
+
+html[data-mode="light"] #sidebar .sidebar-githubchart .githubchart-dark,
+html[data-mode="light"] #post-list .home-githubchart .githubchart-dark {
+  display: none !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-mode]) #sidebar .sidebar-githubchart .githubchart-dark,
+  html:not([data-mode]) #post-list .home-githubchart .githubchart-dark {
+    display: block !important;
+  }
+
+  html:not([data-mode]) #sidebar .sidebar-githubchart .githubchart-light,
+  html:not([data-mode]) #post-list .home-githubchart .githubchart-light {
+    display: none !important;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  html:not([data-mode]) #sidebar .sidebar-githubchart .githubchart-light,
+  html:not([data-mode]) #post-list .home-githubchart .githubchart-light {
+    display: block !important;
+  }
+
+  html:not([data-mode]) #sidebar .sidebar-githubchart .githubchart-dark,
+  html:not([data-mode]) #post-list .home-githubchart .githubchart-dark {
+    display: none !important;
+  }
+}
+
+.home-githubchart {
+  width: 100%;
+}
+
+#post-list .home-githubchart-card {
+  width: 100%;
+}
+
+#post-list .home-githubchart-card .card-body {
+  padding: 0;
+}
+
+#post-list .home-githubchart img {
+  width: 100% !important;
+  max-width: none;
+  height: auto !important;
+  border-radius: 6px;
+  border: 1px solid var(--main-border-color);
+  background-color: var(--main-bg);
+  display: block;
+}
+
+.nlo-lang-switcher,
+.nlo-lang-flags {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: auto;
+  margin: 0;
+}
+
+.nlo-lang-switcher__label,
+.nlo-lang-flags__label {
+  color: var(--text-muted-color);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  flex: 0 0 auto;
+}
+
+.nlo-lang-switcher__select {
+  min-width: 126px;
+  max-width: 8.6rem;
+  margin-left: auto;
+  padding: 0.36rem 0.55rem;
+  color: var(--text-color);
+  font-size: 0.76rem;
+  line-height: 1.2;
+  border: 1px solid var(--main-border-color);
+  border-radius: 8px;
+  background: var(--card-bg);
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.nlo-lang-switcher__select:focus-visible {
+  border-color: var(--link-color);
+}
+
+.nlo-lang-flags__list {
+  display: flex;
+  align-items: center;
+  gap: 0.34rem;
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
+.nlo-lang-flag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  width: 1.86rem;
+  height: 1.46rem;
+  border: 1px solid var(--main-border-color);
+  border-radius: 0.2rem;
+  background: var(--card-bg);
+  overflow: hidden;
+  text-decoration: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.nlo-lang-flag img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: -webkit-optimize-contrast;
+  pointer-events: none;
+}
+
+.nlo-lang-flag__fallback {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--text-muted-color);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+}
+
+.nlo-lang-flag:hover,
+.nlo-lang-flag.is-active {
+  opacity: 1;
+  border-color: var(--link-color);
+}
+
+.nlo-lang-flag.is-active {
+  box-shadow: rgb(138 180 248 / 22%) 0 0 0 1px inset;
+}
+
+#sidebar .nlo-lang-switcher--sidebar {
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+  box-sizing: border-box;
+}
+
+#sidebar .nlo-lang-switcher--sidebar.nlo-lang-switcher,
+#sidebar .nlo-lang-switcher--sidebar.nlo-lang-flags {
+  align-items: center;
+  padding: 0.5rem 0.66rem;
+  border: 1px solid var(--sidebar-border-color);
+  border-radius: 0.75rem;
+  background: var(--sidebar-btn-bg);
+}
+
+#sidebar .nlo-lang-switcher--sidebar.nlo-lang-flags {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+#sidebar .nlo-lang-switcher--sidebar .nlo-lang-switcher__label,
+#sidebar .nlo-lang-switcher--sidebar .nlo-lang-flags__label {
+  color: var(--sidebar-muted-color);
+}
+
+#sidebar .nlo-lang-switcher--sidebar .nlo-lang-switcher__select {
+  width: 100%;
+  min-width: 0;
+  color: var(--sidebar-active-color);
+  border-color: var(--sidebar-border-color);
+  background: var(--sidebar-bg);
+}
+
+#sidebar .nlo-lang-switcher--sidebar .nlo-lang-flag {
+  border-color: var(--sidebar-border-color);
+  background: var(--sidebar-bg);
+}
+
+#sidebar .nlo-lang-switcher--sidebar .nlo-lang-flag__fallback {
+  color: var(--sidebar-active-color);
+}
