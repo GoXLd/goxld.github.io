@@ -3,57 +3,158 @@ set -euo pipefail
 
 root_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 config_file="$root_dir/_config.yml"
-output_path="${1:-$root_dir/assets/img/githubchart.svg}"
-sidebar_path="$root_dir/assets/img/githubchart-sidebar.svg"
-color_hex="${GITHUBCHART_COLOR:-#295170}"
+output_dir="${1:-$root_dir/assets/img}"
+
+light_main="$output_dir/githubchart.svg"
+light_sidebar="$output_dir/githubchart-sidebar.svg"
+dark_main="$output_dir/githubchart-dark.svg"
+dark_sidebar="$output_dir/githubchart-sidebar-dark.svg"
+
+color_light="${GITHUBCHART_COLOR_LIGHT:-#295170}"
+zero_light="${GITHUBCHART_ZERO_LIGHT:-#eeeeee}"
+text_light="${GITHUBCHART_TEXT_LIGHT:-#767676}"
+text_dark="${GITHUBCHART_TEXT_DARK:-#8b949e}"
+
+dark_palette="${GITHUBCHART_DARK_PALETTE:-default}"
+dark_level_0="${GITHUBCHART_DARK_LEVEL0:-}"
+dark_level_1="${GITHUBCHART_DARK_LEVEL1:-}"
+dark_level_2="${GITHUBCHART_DARK_LEVEL2:-}"
+dark_level_3="${GITHUBCHART_DARK_LEVEL3:-}"
+dark_level_4="${GITHUBCHART_DARK_LEVEL4:-}"
+light_level_0="${GITHUBCHART_LIGHT_LEVEL0:-}"
+light_level_1="${GITHUBCHART_LIGHT_LEVEL1:-}"
+light_level_2="${GITHUBCHART_LIGHT_LEVEL2:-}"
+light_level_3="${GITHUBCHART_LIGHT_LEVEL3:-}"
+light_level_4="${GITHUBCHART_LIGHT_LEVEL4:-}"
+
+# Presets for dark-mode chart levels.
+# default:
+#   0 #222730
+#   1 #2a313b
+#   2 #333c49
+#   3 #3e4959
+#   4 #4b5a6d
+# nlo-logo:
+#   dark  : #23262a #223244 #2c4a66 #3a6488 #b35a2a
+#   light : #e6e8eb #c9d9e7 #8fb2cc #2c5472 #c8632d
+if [[ -z "$dark_level_0" || -z "$dark_level_1" || -z "$dark_level_2" || -z "$dark_level_3" || -z "$dark_level_4" ]]; then
+  case "$dark_palette" in
+    default|slate-a)
+      dark_level_0="#222730"
+      dark_level_1="#2a313b"
+      dark_level_2="#333c49"
+      dark_level_3="#3e4959"
+      dark_level_4="#4b5a6d"
+      ;;
+    nlo-logo)
+      dark_level_0="#23262a"
+      dark_level_1="#223244"
+      dark_level_2="#2c4a66"
+      dark_level_3="#3a6488"
+      dark_level_4="#b35a2a"
+      light_level_0="#e6e8eb"
+      light_level_1="#c9d9e7"
+      light_level_2="#8fb2cc"
+      light_level_3="#2c5472"
+      light_level_4="#c8632d"
+      ;;
+    *)
+      echo "Unknown GITHUBCHART_DARK_PALETTE: '$dark_palette' (expected: default|nlo-logo)" >&2
+      exit 1
+      ;;
+  esac
+fi
 
 github_user="${GITHUB_USER:-}"
 if [[ -z "$github_user" && -f "$config_file" ]]; then
   github_user="$(ruby -e 'require "yaml"; cfg = YAML.load_file(ARGV[0]); puts(cfg.dig("github","username") || "")' "$config_file")"
 fi
 
-if [[ -z "$github_user" ]]; then
+if [[ -z "$github_user" || "$github_user" == "github_username" ]]; then
   echo "github.username not found in _config.yml (or set GITHUB_USER)." >&2
   exit 1
 fi
 
-mkdir -p "$(dirname "$output_path")"
+mkdir -p "$output_dir"
+tmp_raw="$(mktemp "${TMPDIR:-/tmp}/githubchart-raw.XXXXXX.svg")"
+trap 'rm -f "$tmp_raw"' EXIT
 
-bundle exec githubchart -u "$github_user" "$output_path"
+if [[ -n "${GITHUBCHART_RUBY_BIN:-}" ]]; then
+  "$GITHUBCHART_RUBY_BIN" -S githubchart -u "$github_user" "$tmp_raw"
+elif [[ -n "${BUNDLE_BIN_PATH:-}" ]]; then
+  githubchart -u "$github_user" "$tmp_raw"
+else
+  bundle exec githubchart -u "$github_user" "$tmp_raw"
+fi
 
-GITHUBCHART_INPUT="$output_path" GITHUBCHART_SIDEBAR="$sidebar_path" GITHUBCHART_COLOR="$color_hex" python3 - <<'PY'
+GITHUBCHART_INPUT="$tmp_raw" \
+GITHUBCHART_LIGHT_MAIN="$light_main" \
+GITHUBCHART_LIGHT_SIDEBAR="$light_sidebar" \
+GITHUBCHART_DARK_MAIN="$dark_main" \
+GITHUBCHART_DARK_SIDEBAR="$dark_sidebar" \
+GITHUBCHART_COLOR_LIGHT="$color_light" \
+GITHUBCHART_ZERO_LIGHT="$zero_light" \
+GITHUBCHART_DARK_LEVEL0="$dark_level_0" \
+GITHUBCHART_DARK_LEVEL1="$dark_level_1" \
+GITHUBCHART_DARK_LEVEL2="$dark_level_2" \
+GITHUBCHART_DARK_LEVEL3="$dark_level_3" \
+GITHUBCHART_DARK_LEVEL4="$dark_level_4" \
+GITHUBCHART_LIGHT_LEVEL0="$light_level_0" \
+GITHUBCHART_LIGHT_LEVEL1="$light_level_1" \
+GITHUBCHART_LIGHT_LEVEL2="$light_level_2" \
+GITHUBCHART_LIGHT_LEVEL3="$light_level_3" \
+GITHUBCHART_LIGHT_LEVEL4="$light_level_4" \
+GITHUBCHART_TEXT_LIGHT="$text_light" \
+GITHUBCHART_TEXT_DARK="$text_dark" \
+python3 - <<'PY'
+import copy
 import os
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 input_path = Path(os.environ["GITHUBCHART_INPUT"])
-output_path = Path(os.environ["GITHUBCHART_SIDEBAR"])
-base_color = os.environ.get("GITHUBCHART_COLOR", "#295170").lstrip("#")
+light_main = Path(os.environ["GITHUBCHART_LIGHT_MAIN"])
+light_sidebar = Path(os.environ["GITHUBCHART_LIGHT_SIDEBAR"])
+dark_main = Path(os.environ["GITHUBCHART_DARK_MAIN"])
+dark_sidebar = Path(os.environ["GITHUBCHART_DARK_SIDEBAR"])
+
+color_light = os.environ.get("GITHUBCHART_COLOR_LIGHT", "#295170")
+zero_light = os.environ.get("GITHUBCHART_ZERO_LIGHT", "#eeeeee")
+text_light = os.environ.get("GITHUBCHART_TEXT_LIGHT", "#767676")
+text_dark = os.environ.get("GITHUBCHART_TEXT_DARK", "#8b949e")
+dark_levels = {
+    "0": os.environ.get("GITHUBCHART_DARK_LEVEL0", ""),
+    "1": os.environ.get("GITHUBCHART_DARK_LEVEL1", ""),
+    "2": os.environ.get("GITHUBCHART_DARK_LEVEL2", ""),
+    "3": os.environ.get("GITHUBCHART_DARK_LEVEL3", ""),
+    "4": os.environ.get("GITHUBCHART_DARK_LEVEL4", ""),
+}
+light_levels = {
+    "0": os.environ.get("GITHUBCHART_LIGHT_LEVEL0", ""),
+    "1": os.environ.get("GITHUBCHART_LIGHT_LEVEL1", ""),
+    "2": os.environ.get("GITHUBCHART_LIGHT_LEVEL2", ""),
+    "3": os.environ.get("GITHUBCHART_LIGHT_LEVEL3", ""),
+    "4": os.environ.get("GITHUBCHART_LIGHT_LEVEL4", ""),
+}
+
+raw_tree = ET.parse(input_path)
+
+def tag_name(el):
+    return el.tag.split("}")[-1]
 
 def hex_to_rgb(hex_str):
-    return tuple(int(hex_str[i:i+2], 16) for i in (0, 2, 4))
+    hex_str = hex_str.lstrip("#")
+    return tuple(int(hex_str[i : i + 2], 16) for i in (0, 2, 4))
 
 def rgb_to_hex(rgb):
     return "#{:02x}{:02x}{:02x}".format(*rgb)
 
 def mix_with_white(rgb, ratio):
-    # ratio: 0..1, where 1 is full base color, 0 is white
     return tuple(int(round(255 * (1 - ratio) + channel * ratio)) for channel in rgb)
 
-base_rgb = hex_to_rgb(base_color)
-palette = {
-    "0": "#eeeeee",
-    "1": rgb_to_hex(mix_with_white(base_rgb, 0.25)),
-    "2": rgb_to_hex(mix_with_white(base_rgb, 0.45)),
-    "3": rgb_to_hex(mix_with_white(base_rgb, 0.7)),
-    "4": rgb_to_hex(base_rgb),
-}
-
-tree = ET.parse(input_path)
-root = tree.getroot()
-
-def tag_name(el):
-    return el.tag.split('}')[-1]
+def mix(rgb_a, rgb_b, ratio):
+    # ratio: 0..1, where 0 is rgb_a and 1 is rgb_b
+    return tuple(int(round(a * (1 - ratio) + b * ratio)) for a, b in zip(rgb_a, rgb_b))
 
 def update_fill(el, color):
     style = el.get("style")
@@ -69,54 +170,111 @@ def update_fill(el, color):
     else:
         el.set("fill", color)
 
-for rect in root.iter():
-    if tag_name(rect) != "rect":
-        continue
-    score = rect.get("data-score")
-    if score in palette:
-        update_fill(rect, palette[score])
-
-# Write recolored main chart with labels intact
-tree.write(input_path, encoding="utf-8", xml_declaration=True)
-
-# Remove labels for sidebar chart
-for parent in root.iter():
-    for child in list(parent):
-        if tag_name(child) == "text":
-            parent.remove(child)
-
-min_x = min_y = None
-max_x = max_y = None
-for rect in root.iter():
-    if tag_name(rect) != "rect":
-        continue
+def is_hex_color(color):
+    if not isinstance(color, str):
+        return False
+    color = color.strip()
+    if len(color) != 7 or not color.startswith("#"):
+        return False
     try:
-        x = float(rect.get("x", "0"))
-        y = float(rect.get("y", "0"))
-        w = float(rect.get("width", "0"))
-        h = float(rect.get("height", "0"))
+        int(color[1:], 16)
+        return True
     except ValueError:
-        continue
-    if min_x is None:
-        min_x = x
-        min_y = y
-        max_x = x + w
-        max_y = y + h
-        continue
-    min_x = min(min_x, x)
-    min_y = min(min_y, y)
-    max_x = max(max_x, x + w)
-    max_y = max(max_y, y + h)
+        return False
 
-if min_x is not None:
-    width = max_x - min_x
-    height = max_y - min_y
-    root.set("viewBox", f"{min_x} {min_y} {width} {height}")
-    root.set("width", f"{width}")
-    root.set("height", f"{height}")
+def build_palette(base_hex, zero_hex, mode):
+    base_rgb = hex_to_rgb(base_hex)
+    zero_rgb = hex_to_rgb(zero_hex)
 
-tree.write(output_path, encoding="utf-8", xml_declaration=True)
+    if mode == "light":
+        if all(is_hex_color(light_levels.get(str(i), "")) for i in range(5)):
+            return {str(i): light_levels[str(i)] for i in range(5)}
+        return {
+            "0": zero_hex,
+            "1": rgb_to_hex(mix_with_white(base_rgb, 0.25)),
+            "2": rgb_to_hex(mix_with_white(base_rgb, 0.45)),
+            "3": rgb_to_hex(mix_with_white(base_rgb, 0.7)),
+            "4": rgb_to_hex(base_rgb),
+        }
+
+    if mode == "dark":
+        if all(is_hex_color(dark_levels.get(str(i), "")) for i in range(5)):
+            return {str(i): dark_levels[str(i)] for i in range(5)}
+        # Fallback interpolation for unexpected input.
+        return {
+            "0": zero_hex,
+            "1": rgb_to_hex(mix(zero_rgb, base_rgb, 0.28)),
+            "2": rgb_to_hex(mix(zero_rgb, base_rgb, 0.48)),
+            "3": rgb_to_hex(mix(zero_rgb, base_rgb, 0.68)),
+            "4": rgb_to_hex(mix(zero_rgb, base_rgb, 0.88)),
+        }
+
+    return {}
+
+def crop_for_sidebar(root):
+    for parent in root.iter():
+        for child in list(parent):
+            if tag_name(child) == "text":
+                parent.remove(child)
+
+    min_x = min_y = None
+    max_x = max_y = None
+
+    for rect in root.iter():
+        if tag_name(rect) != "rect":
+            continue
+        try:
+            x = float(rect.get("x", "0"))
+            y = float(rect.get("y", "0"))
+            w = float(rect.get("width", "0"))
+            h = float(rect.get("height", "0"))
+        except ValueError:
+            continue
+
+        if min_x is None:
+            min_x, min_y, max_x, max_y = x, y, x + w, y + h
+            continue
+
+        min_x = min(min_x, x)
+        min_y = min(min_y, y)
+        max_x = max(max_x, x + w)
+        max_y = max(max_y, y + h)
+
+    if min_x is not None:
+        width = max_x - min_x
+        height = max_y - min_y
+        root.set("viewBox", f"{min_x} {min_y} {width} {height}")
+        root.set("width", f"{width}")
+        root.set("height", f"{height}")
+
+def render_mode(main_path, sidebar_path, palette, label_color):
+    tree = copy.deepcopy(raw_tree)
+    root = tree.getroot()
+
+    for node in root.iter():
+        name = tag_name(node)
+        if name == "rect":
+            score = node.get("data-score")
+            if score in palette:
+                update_fill(node, palette[score])
+        elif name == "text":
+            update_fill(node, label_color)
+
+    tree.write(main_path, encoding="utf-8", xml_declaration=True)
+
+    sidebar_tree = copy.deepcopy(tree)
+    sidebar_root = sidebar_tree.getroot()
+    crop_for_sidebar(sidebar_root)
+    sidebar_tree.write(sidebar_path, encoding="utf-8", xml_declaration=True)
+
+light_palette = build_palette(color_light, zero_light, "light")
+dark_palette = build_palette("#3f4a59", "#1b1b1b", "dark")
+
+render_mode(light_main, light_sidebar, light_palette, text_light)
+render_mode(dark_main, dark_sidebar, dark_palette, text_dark)
 PY
 
-echo "Wrote $output_path"
-echo "Wrote $sidebar_path"
+echo "Wrote $light_main"
+echo "Wrote $light_sidebar"
+echo "Wrote $dark_main"
+echo "Wrote $dark_sidebar"
