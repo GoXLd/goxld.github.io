@@ -27,14 +27,14 @@ jobs:
       - name: Generate charts
         run: tools/generate-githubchart.sh
         env:
-          GITHUBCHART_COLOR: "#295170"
+          GITHUBCHART_COLOR_LIGHT: "#295170"
 
       - name: Commit and push if changed
         run: |
           if git status --porcelain | grep -E 'assets/img/githubchart' >/dev/null; then
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add assets/img/githubchart.svg assets/img/githubchart-sidebar.svg
+            git add assets/img/githubchart.svg assets/img/githubchart-sidebar.svg assets/img/githubchart-dark.svg assets/img/githubchart-sidebar-dark.svg
             git commit -m "chore: update GitHub contribution charts"
             git push
           else
