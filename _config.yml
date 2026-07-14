@@ -147,7 +147,9 @@ nlo:
   github_chart:
     enabled: true
     home_image: /assets/img/githubchart.svg
+    home_image_dark: /assets/img/githubchart-dark.svg
     sidebar_image: /assets/img/githubchart-sidebar.svg
+    sidebar_image_dark: /assets/img/githubchart-sidebar-dark.svg
   branding:
     logo_src: /img/vande-logo-low.png
     logo_alt: Alexandre Vandemoortele
