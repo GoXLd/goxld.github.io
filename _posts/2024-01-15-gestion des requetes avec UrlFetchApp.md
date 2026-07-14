@@ -7,6 +7,8 @@ author: GoXLd
 pin: false
 published: true
 mermaid: true
+language: fr-FR
+translation_key: gestion-des-requetes-avec-urlfetchapp
 ---
 
 # Optimisation de la gestion des requêtes dans Google Apps Script

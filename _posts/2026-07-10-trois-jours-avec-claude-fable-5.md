@@ -13,6 +13,8 @@ mermaid: true
 media_subpath: /img/fable5/
 image:
   path: fable5-cover.png
+language: fr-FR
+translation_key: trois-jours-avec-claude-fable-5
 ---
 
 # Claude Fable 5 : trois jours, 100 000+ lignes, une prod vivante

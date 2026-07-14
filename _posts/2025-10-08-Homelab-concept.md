@@ -12,6 +12,8 @@ image:
   path: homelab-titre.jpg
   lqip: data:image/webp;base64,UklGRpoAAABXRUJQVlA4II4AAAAQBACdASoZAA4APp0+mUgloyKhMAgAsBOJYwCdB3gAitvRg4/eJyjjgAD+ympIJ+nn1Zk4QcwG6LzPjtQAM13ha5uRNhmU525b0LJ81vRBdamKIpg7GdbtYYWmtb+m2jYNC7ZDq5XNyrDe+zyVQgyXaO+LMND2MTM02E88QfU2sYZz5PP34g2irOG54AAA
 ads: true
+language: fr-FR
+translation_key: homelab-concept
 ---
 
 # Mon HomeLab v3 : performance et silence

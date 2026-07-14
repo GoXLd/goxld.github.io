@@ -6,6 +6,8 @@ tags: [javascript, notions, noyau, codestyle]     # TAG names should always be l
 author: GoXLd
 pin: false
 published: true
+language: fr-FR
+translation_key: javascript-code-style
 ---
 
 # Bonnes pratiques pour l'Indentation dans le Code JavaScript

@@ -10,6 +10,8 @@ toc: true
 published: true
 ads: true
 mermaid: false
+language: fr-FR
+translation_key: debug-cloudflare-workers-logs-structures
 ---
 
 # Cloudflare Workers : arrêter de chercher une commande, commencer par lire une exécution

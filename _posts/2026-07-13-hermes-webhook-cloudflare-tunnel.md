@@ -10,6 +10,8 @@ toc: true
 published: true
 ads: true
 mermaid: false
+language: fr-FR
+translation_key: hermes-webhook-cloudflare-tunnel
 ---
 
 # Hermes derrière un tunnel : ne pas confondre exposition et livraison
