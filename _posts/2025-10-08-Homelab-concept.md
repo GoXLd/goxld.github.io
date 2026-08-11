@@ -4,7 +4,7 @@ description: Présentation complète de ma troisième version de HomeLab - un cl
 date: 2025-10-08
 tags: [homelab, serveur, amd, cluster, nas]
 author: GoXLd
-pin: false
+pin: true
 toc: false
 published: true
 media_subpath: /img/homelab/
