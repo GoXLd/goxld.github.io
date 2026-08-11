@@ -7,7 +7,7 @@ tags: [devops, sre, monitoring, nodejs, pm2, tailscale, homelab]
 author: GoXLd
 pin: false
 toc: true
-published: false
+published: true
 ads: false
 mermaid: true
 media_subpath: /img/monitoring-pm2/

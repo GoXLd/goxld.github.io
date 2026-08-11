@@ -7,7 +7,7 @@ tags: [hermes, mempalace, mémoire, ia, python, mcp, open-source]
 author: GoXLd
 pin: false
 toc: true
-published: false
+published: true
 ads: false
 mermaid: true
 language: fr-FR
