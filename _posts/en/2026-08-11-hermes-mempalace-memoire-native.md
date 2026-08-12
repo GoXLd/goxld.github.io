@@ -1,6 +1,6 @@
 ---
 title: 'Hermes × MemPalace: when a memory plugin becomes native infrastructure'
-description: "How the MemPalace provider connects to the Hermes lifecycle through 27 local-memory tools, and how my contribution turned four review blockers into safeguards against duplicates and lost memories."
+description: "How the MemPalace integration with Hermes went through 126 days from the first prototype to the provider-core merge, and how review turned the risks of duplicates and lost memories into verifiable safeguards."
 date: 2026-08-11
 categories: [DevOps]
 tags: [hermes, mempalace, mémoire, ia, python, mcp, open-source]
@@ -17,7 +17,7 @@ permalink: /posts/en/hermes-mempalace-provider-memoire-native/
 
 # Hermes × MemPalace: memory that finally takes part in the agent's lifecycle
 
-I have just taken part in the largest open source pull request of my career so far: the native integration of MemPalace as a memory provider for Hermes. The core was merged into `develop` on August 11, 2026, after **2,591 lines added**, six files changed, eight successful CI jobs and explicit approval for the 3.7.0 release train.[1]
+I have just taken part in the largest open source pull request of my career so far: the native integration of MemPalace as a memory provider for Hermes. Its path began with the first commit on April 7, 2026; on August 11, the core was merged into `develop` after **2,591 lines added**, six files changed, eight successful CI jobs and explicit approval for the 3.7.0 release train.[1][8][9]
 
 Yet my name does not appear as the author of the merged PR.[1]
 
@@ -27,6 +27,33 @@ My contribution took a different form: I turned four issues raised during review
 
 > In one sentence: MemPalace does more than give Hermes new buttons; it slots into its lifecycle, archives exchanges without blocking the conversation, preloads relevant context and exposes **27 tools** over a structured local palace.[1]
 {: .prompt-info }
+
+## 126 days from prototype to merge
+
+If you look only at PR #1915, the story starts on July 2, 2026. By then, however, the integration had already reached its final provider-core iteration.[1]
+
+The first commit for this integration, [`11b1996d`](https://github.com/MemPalace/mempalace/commit/11b1996db7c82b9d728b912307906074ec1832ba) (`feat: Hermes memory provider integration`), was created on April 7 at 00:16 UTC. A few seconds later, ZK-Snarky opened PR #3 with the same concept: a native memory provider, automatic conversation filing, palace tools and an installation command.[8][9]
+
+The first version appeared quickly. Its four original commits were made on April 7 between 00:16 and 06:51 UTC, a span of roughly six and a half hours. PR #3 was later closed after it became stale against the main branch and the changing Hermes API, but the work did not end there.[9]
+
+PR #1684 explicitly says that it revives #3. Raman kept ZK-Snarky's four original commits at the base of the branch, rebased the work and rebuilt the integration for the current `MemoryProvider` API. The work also continued the provider discussion in Hermes Agent issue #6323. After review, this large PR was split into smaller pieces.[5][10]
+
+That split produced #1915. Its description says that #1684 was being divided into two PRs and that this was the first part: provider core and tests. The `mempalace hermes install` command, backfill for existing sessions and documentation moved to a stacked follow-up so the core could be reviewed separately.[1]
+
+| Stage | Date | What happened |
+|---|---|---|
+| First implementation commit | April 7, 2026, 00:16 UTC | Provider development begins |
+| PR #3 | April 7, 2026 | First complete integration proposal |
+| PR #1684 | June 3, 2026 | Work revived, rebased and updated for the new API |
+| PR #1915 | July 2, 2026, 18:46 UTC | Provider core split into a separate PR |
+| #1915 merged | August 11, 2026, 10:53 UTC | Core accepted into `develop` |
+
+The interval from the first commit to merge was **126 days and 10 hours**, a little over four months. The final implementation and review phase in #1915 lasted **39 days and 16 hours**, or about 40 calendar days.[1][8]
+
+> Those 126 days were not 126 person-days of continuous development. They were the feature's calendar journey: a fast first prototype, closure of a stale PR, changes to the Hermes API, revival and rebase, several review rounds, and a final split into smaller PRs.
+{: .prompt-tip }
+
+"Integration" also needs a qualifier here: what merged on August 11 was the memory-provider core. Installation, backfill and documentation were still in a separate follow-up.[1][4]
 
 ## The starting point: Hermes already had memory plugins
 
@@ -126,7 +153,7 @@ The #1915 thread has five human participants. The automated reviewers Gemini Cod
 | [vavush](https://github.com/vavush) | Revived the thread after several weeks of waiting and checked the status of the blockers |
 | [alistairwalsh](https://github.com/alistairwalsh) | Shared independent experience with a large Qdrant installation and proposed durability follow-ups |
 
-There is also a history before this thread: #1915 is the refocused version of a broader integration, itself descended from earlier attempts and the open invitation in NousResearch/hermes-agent#6323. That is another reason not to present this result as the isolated work of a single author.[1][5]
+The chain from #3 through #1684 to #1915 is another reason not to present the result as one person’s isolated work. It includes ZK-Snarky’s original implementation, Raman’s rebuild for the changed API, maintainer requirements and later contributions made during review.[1][8][9][10]
 
 ## The honest part: my contribution is not in the merge as I wrote it
 
@@ -147,6 +174,8 @@ The reviewer placed the core on the 3.7.0 release train, but the complete instal
 | Item | Status verified on August 11, 2026 |
 |---|---|
 | Hermes provider core | **Merged into `develop`** |
+| Full calendar journey | **126 days and 10 hours** from the first commit to the core merge |
+| Final #1915 iteration | **39 days and 16 hours** from PR opening to merge |
 | #1915 diff | **2,591 additions**, 1 deletion, 6 files |
 | Exposed MemPalace surface | **27 tools** |
 | Tests announced in the core | **42 new tests** |
@@ -169,3 +198,6 @@ For me, this PR also changes the definition of a contribution. My code was not m
 [5] https://github.com/NousResearch/hermes-agent/issues/6323 — Hermes Agent issue #6323 — MemPalace memory provider
 [6] https://hermes-agent.nousresearch.com/docs/user-guide/features/memory-providers — Hermes Agent — Memory Providers
 [7] https://github.com/MemPalace/mempalace/releases — MemPalace releases
+[8] https://github.com/MemPalace/mempalace/commit/11b1996db7c82b9d728b912307906074ec1832ba — First Hermes memory-provider integration commit
+[9] https://github.com/MemPalace/mempalace/pull/3 — Initial PR #3 — Hermes memory provider integration
+[10] https://github.com/MemPalace/mempalace/pull/1684 — Revival of PR #3, rebase and update for the current MemoryProvider API
