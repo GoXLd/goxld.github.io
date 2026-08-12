@@ -11,8 +11,6 @@ published: true
 ads: true
 mermaid: false
 media_subpath: /img/ovhcloud-contributions/
-image:
-  path: cover.png
 language: fr-FR
 translation_key: sept-contributions-documentation-ovhcloud
 ---
