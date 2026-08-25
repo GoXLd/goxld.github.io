@@ -1,6 +1,6 @@
 ---
 title: A maintainer's review guide, turned into a method
-description: Two weeks of detailed reviews from OVHcloud maintainer Y0Coss on my documentation PRs, compiled into a concrete guide for documentation maintenance and LTS management — version replacement, authentic transcripts and evidence discipline.
+description: Detailed reviews from OVHcloud maintainer Y0Coss on my recent documentation PRs, reworked into a working guide for documentation maintenance and LTS management — choosing replacement versions, authentic sample output and evidence discipline.
 date: 2026-08-25
 categories: [DevOps]
 tags: [devops, open-source, documentation, ovhcloud, lts, revue-code]
@@ -22,9 +22,9 @@ Hi everyone!
 
 In my [previous post](/posts/en/sept-contributions-documentation-ovhcloud/), I told the story of my first seven accepted contributions to the OVHcloud documentation. Since then a second wave has landed: eight new merges (#620–#625, #627 and #643 — 62 files), three approved PRs waiting on an internal migration, and above all **a series of reviews so detailed they deserve better than the notification trash bin**.
 
-The maintainer signing these reviews makes a habit of justifying every request with verifiable reasoning: decoding an nginx ETag, PHP and Debian support windows, geographic anchor conventions. These are miniature lessons in documentation engineering. So I compiled them into an internal guide — and this post is its public version.
+The maintainer behind them, Y0Coss, justifies every request with verifiable facts: a decoded nginx ETag, PHP and Debian support windows, anchor naming conventions. Each review is a miniature lesson in documentation engineering — so I compiled them into a working guide, and this post is its public version.
 
-> In one sentence: eight additional merges (62 files, all languages), zero blunt rejections, and a maintenance guide born from the reviews themselves — because a good review teaches more than a merge.
+> In one sentence: eight additional merges (62 files, every language), zero blunt rejections, and a maintenance guide that grew directly out of the reviews. A good review teaches more than the merge itself.
 {: .prompt-info }
 
 ## Second wave: the table first
@@ -45,7 +45,7 @@ PRs #628 (PHP 8.4) and #629 (Python/Wagtail) are approved and awaiting migration
 
 ## Rule #1: "fully supported", not just "newer"
 
-My first version of #644 replaced `debian:9-slim` with `debian:12-slim`. Classic reasoning: stretch is dead, bookworm is stable, go. The review raised the bar:
+My first version of #644 replaced `debian:9-slim` with `debian:12-slim`. The reasoning felt airtight: stretch is dead, bookworm is the current stable, done. The review raised the bar:
 
 > Debian 12 became *oldstable* when trixie went stable, its standard security support ended in July. `13-slim` is a one-token change that buys three more years of security support.
 >
@@ -54,11 +54,11 @@ My first version of #644 replaced `debian:9-slim` with `debian:12-slim`. Classic
 
 PHP 8.3 had left active support at the end of 2025; so #628 moved to 8.4. MySQL targeted the 8.4 LTS line rather than the 9.x innovation train. The generalized rule: an EOL replacement must buy years, otherwise you are merely relocating the debt.
 
-A second imposed reflex: verify the real identity of Docker tags by **digest**, not by name. `stable-slim` matched neither bookworm nor trixie — floating aliases move silently.
+A second reflex worth locking in: verify Docker tags by digest, not by name. `stable-slim` matched neither `bookworm-slim` nor `trixie-slim` — floating aliases drift between versions silently.
 
 ## Rule #2: never invent console output
 
-This is the most striking lesson, and it came from two separate reviews. On #641 I had replaced `Server: nginx/1.7.9` with `nginx/1.27.3` in a `curl -I` example, thinking I was making the transcript consistent with the new tag. Problem: I left the old `Last-Modified` and old `ETag` in place. The review decoded the ETag in front of me:
+This lesson stuck with me the most — not least because it arrived from two directions at once. On #641 I replaced `Server: nginx/1.7.9` with `nginx/1.27.3` inside a `curl -I` example, wanting the transcript to match the new tag. But I left the old `Last-Modified` and old `ETag` in place — and the review took that ETag apart:
 
 ```text
 ETag = hex(mtime)-hex(size)
@@ -66,9 +66,9 @@ ETag = hex(mtime)-hex(size)
      108 → 264 bytes                 = the stated Content-Length
 ```
 
-A perfectly self-consistent fingerprint of nginx 1.7.9's default index page — meaning a `Server: 1.27.3` header with those values described **a response that cannot exist**. The same verdict on #640 for a `SHOW DATABASES;` transcript dating from MySQL 5.6: do not reconstruct it by hand, because "a stale transcript beats an invented one".
+A perfectly self-consistent fingerprint of the 1.7.9 default index page and nothing else. A `Server: 1.27.3` header next to those values described an HTTP response that cannot exist. The same verdict reached #640's `SHOW DATABASES;` transcript from the MySQL 5.6 era: do not reconstruct it by hand — "a stale transcript beats an invented one".
 
-The correct procedure is now clear:
+The procedure is now clear:
 
 >My rules for transcripts:
 >1. **A sample output is data, not decoration** — it must remain an authentic, dated capture.
@@ -81,17 +81,17 @@ I pushed a revert commit (`01d30e62a`) restoring the original `Server:` lines wh
 
 ## Rule #3: anchors have memory and grammar
 
-On #621, my first approach added `<a name="changepassworden">` anchors where TOC links pointed into the void. The review reversed the direction: those sections already carried `-fr` (France!) anchors, and adding mine would orphan those. Eleven other anchors in the same guide proved the suffix was **geographic**, not linguistic. The right fix: repoint the six other locales to the existing anchors — zero new definitions, convention respected.
+On #621, my first instinct was to add `<a name="changepassworden">` anchors where TOC links pointed into the void. The review reversed that 180 degrees: those sections already carried `-fr` (France!) anchors, and adding mine would have orphaned them. Eleven other anchors in the same guide confirmed the suffix is **geographic**, not linguistic. The right fix: repoint the six other locales to the existing anchors — zero new definitions, convention respected.
 
-Generalized: before adding anything, inventory what already exists near the target, count usages to read the convention, then converge variants toward the form that is already correct.
+The generalized rule: before adding anything, study what already exists near the target; count usages to read the convention; then converge every variant onto the form that is already correct.
 
 ## Rule #4: link, don't restate
 
-On #629, my sentence "Wagtail requires Python 3.10 or later" duplicated exactly what the official docs say — and would become false at the next bump. The review: link the official source rather than copy a list destined to age. Also verify that the localized URL actually exists (Wagtail docs are English-only; the `/fr/stable/...` link returned 404).
+In #629 my sentence "Wagtail requires Python 3.10 or later" repeated the official documentation word for word — and would go stale at Wagtail's next release. The review's conclusion: link the primary source instead of copying a version list destined to age. As a bonus, it turned out no localized URL exists: the Wagtail docs are English-only, and `/fr/stable/...` returned a 404.
 
-## Review etiquette, observed from the other side
+## Review etiquette, from the reviewed side
 
-What stands out over these two weeks is as much the form as the substance:
+What impressed me over these days is as much the form as the substance:
 
 1. Every review **opens by validating** what is correct before any correction.
 2. Requests are explicitly **graded**: "blocking" / "not blocking but worth taking while the PR is open" / "wording tweak".
@@ -109,4 +109,4 @@ I published a public thank-you under #641 for that level of review quality — i
 | In the pipeline | #628/#629 approved, #640/#641/#644 under review |
 | Produced | rules for versioning, transcripts, anchors, evidence |
 
-The real gain from this cycle is neither the file count nor the merge count. It is converting individual reviews into a transferable method: how to choose a replacement version, when NOT to edit a transcript, how to read a repository's convention before touching it. A well-reviewed open-source contribution teaches twice: once when you fix it, and once when you reread why it needed fixing.
+The real gain from this cycle is neither the file count nor the merge count. It is the method that stays with you after the individual reviews are over: how to choose a replacement version, when NOT to touch a transcript, how to read a repository's convention before you start changing it. A contribution that survives a good review teaches twice: once while you fix it, and again when you work out why it needed fixing in the first place.
