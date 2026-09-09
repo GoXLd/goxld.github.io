@@ -10,9 +10,6 @@ toc: true
 published: true
 ads: false
 mermaid: true
-media_subpath: /img/proxmox-ovh-vps/
-image:
-  path: cover.png
 language: fr-FR
 ---
 
