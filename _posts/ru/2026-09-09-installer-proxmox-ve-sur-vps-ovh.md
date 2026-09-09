@@ -105,7 +105,7 @@ apt install -y proxmox-ve postfix open-iscsi
 
 ```mermaid
 flowchart LR
-    Internet[Интернет] -->|Публичный IPv4\n149.202.227.213| VPS[OVH VPS\nProxmox VE]
+    Internet[Интернет] -->|Публичный IPv4| VPS[OVH VPS\nProxmox VE]
     VPS -->|ens3| BridgeNAT[vmbr1\n10.10.10.1/24]
     BridgeNAT --> LXC1[LXC/VM\n10.10.10.10]
     BridgeNAT --> LXC2[LXC/VM\n10.10.10.20]
@@ -157,8 +157,8 @@ table inet filter {
 table ip nat {
   chain prerouting {
     type nat hook prerouting priority dstnat; policy accept;
-    iifname "ens3" ip daddr 149.202.227.213 tcp dport 80  dnat to 10.10.10.1:80
-    iifname "ens3" ip daddr 149.202.227.213 tcp dport 443 dnat to 10.10.10.1:443
+    iifname "ens3" ip daddr <PUBLIC_IPV4> tcp dport 80  dnat to 10.10.10.1:80
+    iifname "ens3" ip daddr <PUBLIC_IPV4> tcp dport 443 dnat to 10.10.10.1:443
   }
   chain postrouting {
     type nat hook postrouting priority srcnat; policy accept;
