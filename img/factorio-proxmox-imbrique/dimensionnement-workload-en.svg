@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Sizing by working set</title>
+  <desc id="desc">The VM moves from Factorio alone to Factorio plus Satisfactory, with 10 GiB maximum memory, an 8 GiB balloon minimum, and zswap on the host.</desc>
+  <rect width="1600" height="900" fill="#F7F8FA"/>
+  <g font-family="Inter,Arial,sans-serif">
+    <text x="90" y="100" font-size="28" font-weight="700" fill="#111827">SIZE THE WORKING SET, NOT THE CEILING</text>
+    <text x="90" y="140" font-size="18" fill="#6B7280">“Less” is not the goal — headroom must follow active workloads</text>
+
+    <rect x="100" y="220" width="560" height="470" rx="22" fill="#FFFFFF" stroke="#2563EB" stroke-width="4"/>
+    <text x="145" y="280" font-size="20" fill="#6B7280">STEP 1</text>
+    <text x="145" y="330" font-size="31" font-weight="800" fill="#111827">Factorio alone</text>
+    <rect x="145" y="390" width="470" height="190" rx="16" fill="#EEF2FF"/>
+    <rect x="180" y="430" width="150" height="110" rx="12" fill="#2563EB"/>
+    <text x="255" y="478" text-anchor="middle" font-size="19" font-weight="700" fill="#FFFFFF">Factorio</text>
+    <text x="255" y="510" text-anchor="middle" font-size="16" fill="#DBEAFE">≈ 557 MiB</text>
+    <text x="570" y="465" text-anchor="end" font-size="42" font-weight="800" fill="#1E3A8A">6 GiB</text>
+    <text x="570" y="505" text-anchor="end" font-size="18" fill="#6B7280">4 vCPU</text>
+    <text x="145" y="635" font-size="18" fill="#374151">Headroom sized for this workload</text>
+
+    <path d="M700 455H900" stroke="#7C3AED" stroke-width="6"/>
+    <path d="M880 438L910 455L880 472" fill="none" stroke="#7C3AED" stroke-width="6"/>
+    <text x="800" y="415" text-anchor="middle" font-size="18" font-weight="700" fill="#7C3AED">NEW WORKLOAD</text>
+    <text x="800" y="515" text-anchor="middle" font-size="17" fill="#6B7280">Satisfactory ≈ 3.9 GB RSS</text>
+    <text x="800" y="545" text-anchor="middle" font-size="17" fill="#EF4444">only 939 MiB available</text>
+
+    <rect x="940" y="190" width="560" height="530" rx="22" fill="#FFFFFF" stroke="#7C3AED" stroke-width="4"/>
+    <text x="985" y="250" font-size="20" fill="#6B7280">STEP 2</text>
+    <text x="985" y="300" font-size="31" font-weight="800" fill="#111827">Two servers</text>
+    <rect x="985" y="350" width="470" height="210" rx="16" fill="#EDE9FE"/>
+    <rect x="1020" y="395" width="155" height="120" rx="12" fill="#2563EB"/>
+    <text x="1098" y="447" text-anchor="middle" font-size="19" font-weight="700" fill="#FFFFFF">Factorio</text>
+    <rect x="1190" y="395" width="225" height="120" rx="12" fill="#7C3AED"/>
+    <text x="1302" y="440" text-anchor="middle" font-size="19" font-weight="700" fill="#FFFFFF">Satisfactory</text>
+    <text x="1302" y="477" text-anchor="middle" font-size="16" fill="#EDE9FE">primary working set</text>
+    <text x="985" y="615" font-size="23" fill="#111827">Maximum</text>
+    <text x="1415" y="615" text-anchor="end" font-size="30" font-weight="800" fill="#7C3AED">10 GiB</text>
+    <text x="985" y="660" font-size="23" fill="#111827">Minimum balloon</text>
+    <text x="1415" y="660" text-anchor="end" font-size="30" font-weight="800" fill="#2563EB">8 GiB</text>
+
+    <rect x="340" y="775" width="920" height="72" rx="36" fill="#111827"/>
+    <text x="800" y="805" text-anchor="middle" font-size="18" fill="#FFFFFF">4 vCPUs retained · zstd zswap on host · max pool 15%</text>
+    <text x="800" y="830" text-anchor="middle" font-size="15" fill="#D1D5DB">Memory safeguards validated; gameplay gain not measured after this step</text>
+  </g>
+</svg>
